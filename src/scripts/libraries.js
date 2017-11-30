@@ -81,6 +81,5 @@ for (var w_key in Vector.prototype){
 
 function PointMass(p_m, p_x, p_y, p_z) { // Constructor
   this.mass = p_m;
-  this.designPosition = new Vector(p_x, p_y, p_z);  
-  this.correctedPosition = new Vector();
+  this.pos = new Vector(p_x, p_y, p_z);  
 }

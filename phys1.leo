@@ -14,7 +14,7 @@
 <v t="fil.20171126152802.1"><vh>app</vh></v>
 <v t="fil.20171125220307.1"><vh>vectors</vh></v>
 <v t="fil.20171126222002.1"><vh>physics</vh></v>
-<v t="fil.20171113165739.1"><vh>Source Files</vh>
+<v t="fil.20171113165739.1" a="E"><vh>Source Files</vh>
 <v t="fil.20171118225356.1"><vh>script: create folders</vh></v>
 <v t="fil.20171119191756.1"><vh>HTML</vh>
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
@@ -37,7 +37,7 @@
 <v t="fil.20171119191818.1"><vh>Styles</vh>
 <v t="fil.20171119191903.1"><vh>@clean src/styles/style.less</vh></v>
 </v>
-<v t="fil.20171119191824.1" a="E"><vh>Scripts</vh>
+<v t="fil.20171119191824.1"><vh>Scripts</vh>
 <v t="fil.20171113233419.1"><vh>@clean src/scripts/app.js</vh>
 <v t="fil.20171126152802.1"></v>
 </v>
@@ -54,7 +54,8 @@
 </v>
 </vnodes>
 <tnodes>
-<t tx="fil.20171113165739.1"></t>
+<t tx="fil.20171113165739.1">@lineending crlf
+</t>
 <t tx="fil.20171113172110.1">{
   "name": "Physics",
   "description": "Physics tests",
@@ -197,6 +198,7 @@ except OSError as e:
 c.fileCommands.writeAtFileNodes()
 </t>
 <t tx="fil.20171118234720.1">dist
+node_modules
 </t>
 <t tx="fil.20171119191756.1"></t>
 <t tx="fil.20171119191818.1"></t>
@@ -371,52 +373,47 @@ console.log("Vector.test: ", Vector.test(22, 99));
 @tabwidth -2
 @nowrap
 window.log = console.log;
-window.onload = function () { main();}
+window.onload = function () { main();};
 
 function main(){
  
   var elements=[];
-  elements.push( new PointMass(1,  1,0,0) ); 
-  elements.push( new PointMass(1,  5,0,0) ); 
-  
-  var i, totalMass, CombinedCG, firstMoment;
-
-  totalMass=0;
-  
-  for (i = 0; i &lt; elements.length; i++){
-    totalMass += elements[i].mass;
-  }
-  
-  firstMoment = new Vector(0,0,0);
-  for (i = 0; i &lt; elements.length; i++){
-    firstMoment.add( Vector.multiply( elements[i].designPosition, elements[i].mass) );
-  }
-  CombinedCG = firstMoment.multiply( 1/totalMass );
-
-  for (i = 0; i &lt; elements.length; i++){
-    elements[i].correctedPosition = Vector.sub( elements[i].designPosition, CombinedCG);
-  }
-  
+  elements.push( new PointMass(1, 2,0,0) );
+  elements.push( new PointMass(1, 6,0,0) );
+    
   function centerGravity(p_elements){
-
+    var i;
+    var w_totalMass=0;
+    for (i = 0; i &lt; p_elements.length; i++){
+      w_totalMass += p_elements[i].mass;
+    }
+    var w_firstMoment = new Vector(0,0,0);
+    for (i = 0; i &lt; p_elements.length; i++){
+      w_firstMoment.add( Vector.multiply( p_elements[i].pos, p_elements[i].mass) );
+    }
+    return w_firstMoment.multiply( 1/w_totalMass );
   }
-  
-  
+
   function momentOfInertia(p_elements){
+    var i;
+    var w_centerGravity = centerGravity(p_elements);
+
+    var w_pos=[]; // corrected positions from center of gravity
+    for (i = 0; i &lt; p_elements.length; i++){
+      w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
+    }
     var w_m = new Vector(0,0,0);
     for (i = 0; i &lt; p_elements.length; i++){
-      var pos = p_elements[i].correctedPosition;
-      w_m.add( new Vector( Math.pow(pos.y, 2)+Math.pow(pos.z, 2),
-                           Math.pow(pos.x, 2)+Math.pow(pos.z, 2),
-                           Math.pow(pos.x, 2)+Math.pow(pos.y, 2) 
-                          ).multiply(p_elements[i].mass) );
-  
+      w_m.add(new Vector( w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z,
+                          w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z,
+                          w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y
+                        ).multiply(p_elements[i].mass)
+            );
     }
-    return w_m; 
+    return w_m;
   }
   
-
-  log("momentOfInertia ",momentOfInertia(elements) );
+  log("momentOfInertia: ", momentOfInertia(elements) );
 }
 </t>
 <t tx="fil.20171126222002.1">@language javascript
@@ -424,8 +421,7 @@ function main(){
 
 function PointMass(p_m, p_x, p_y, p_z) { // Constructor
   this.mass = p_m;
-  this.designPosition = new Vector(p_x, p_y, p_z);  
-  this.correctedPosition = new Vector();
+  this.pos = new Vector(p_x, p_y, p_z);  
 }
 </t>
 </tnodes>

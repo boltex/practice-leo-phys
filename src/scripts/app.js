@@ -1,11 +1,11 @@
 window.log = console.log;
-window.onload = function () { main();}
+window.onload = function () { main();};
 
 function main(){
  
   var elements=[];
-  elements.push( new PointMass(1,  2,0,0) );
-  elements.push( new PointMass(1,  4,0,0) );
+  elements.push( new PointMass(1, 2,0,0) );
+  elements.push( new PointMass(1, 6,0,0) );
     
   function centerGravity(p_elements){
     var i;
@@ -15,7 +15,7 @@ function main(){
     }
     var w_firstMoment = new Vector(0,0,0);
     for (i = 0; i < p_elements.length; i++){
-      w_firstMoment.add( Vector.multiply( p_elements[i].designPosition, p_elements[i].mass) );
+      w_firstMoment.add( Vector.multiply( p_elements[i].pos, p_elements[i].mass) );
     }
     return w_firstMoment.multiply( 1/w_totalMass );
   }
@@ -23,20 +23,21 @@ function main(){
   function momentOfInertia(p_elements){
     var i;
     var w_centerGravity = centerGravity(p_elements);
+
+    var w_pos=[]; // corrected positions from center of gravity
     for (i = 0; i < p_elements.length; i++){
-      p_elements[i].correctedPosition = Vector.sub(p_elements[i].designPosition, w_centerGravity);
+      w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
     }
     var w_m = new Vector(0,0,0);
     for (i = 0; i < p_elements.length; i++){
-      var pos = p_elements[i].correctedPosition;
-      w_m.add(new Vector( pos.y*pos.y + pos.z*pos.z,
-                           pos.x*pos.x + pos.z*pos.z,
-                           pos.x*pos.x + pos.y*pos.y
-                          ).multiply(p_elements[i].mass)
+      w_m.add(new Vector( w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z,
+                          w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z,
+                          w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y
+                        ).multiply(p_elements[i].mass)
             );
     }
     return w_m;
   }
   
-  log("momentOfInertia ",momentOfInertia(elements) );
+  log("momentOfInertia: ", momentOfInertia(elements) );
 }

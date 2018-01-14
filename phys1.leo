@@ -12,20 +12,28 @@
 <v t="fil.20171118201906.1"><vh>Introduction</vh></v>
 <v t="fil.20171126150155.1"><vh>old test</vh></v>
 <v t="fil.20171126152802.1"><vh>app</vh></v>
-<v t="fil.20171125220307.1"><vh>vectors</vh></v>
-<v t="fil.20171126222002.1"><vh>physics</vh></v>
+<v t="fil.20171125220307.1"><vh>maths</vh></v>
+<v t="fil.20171126222002.1"><vh>physics</vh>
+<v t="fil.20171202212813.1"><vh>PointMass(mass, x, y, z)</vh></v>
+<v t="fil.20171212225812.1"><vh>Solid(mass, x,y,z)</vh></v>
+<v t="fil.20171202212845.1"><vh>Cuboid(mass, x, y, z, length, width, height)</vh></v>
+<v t="fil.20171202231233.1"><vh>totalMass(elements)</vh></v>
+<v t="fil.20171202213029.1"><vh>centerGravity(elements)</vh></v>
+<v t="fil.20171202213032.1"><vh>momentOfInertia(elements)</vh></v>
+<v t="fil.20171202213112.1"><vh>solidMomentOfInertia(shapeStr, mass, p1, p2, p3)</vh></v>
+</v>
 <v t="fil.20171113165739.1" a="E"><vh>Source Files</vh>
 <v t="fil.20171118225356.1"><vh>script: create folders</vh></v>
 <v t="fil.20171119191756.1"><vh>HTML</vh>
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
 <v t="fil.20171119191851.2"><vh>doctype</vh></v>
-<v t="fil.20171119191851.3" a="E"><vh>html</vh>
-<v t="fil.20171119191851.4" a="E"><vh>head</vh>
+<v t="fil.20171119191851.3"><vh>html</vh>
+<v t="fil.20171119191851.4"><vh>head</vh>
 <v t="fil.20171119191851.5"><vh>Meta</vh></v>
 <v t="fil.20171119191851.6"><vh>Title</vh></v>
 <v t="fil.20171119191851.7"><vh>Styles</vh></v>
 </v>
-<v t="fil.20171119191851.8" a="E"><vh>body</vh>
+<v t="fil.20171119191851.8"><vh>body</vh>
 <v t="fil.20171119191851.9"><vh>Header Test</vh></v>
 <v t="fil.20171119191851.10"><vh>Some test article</vh></v>
 <v t="fil.20171119191851.11"><vh>Some test image</vh></v>
@@ -41,7 +49,7 @@
 <v t="fil.20171113233419.1"><vh>@clean src/scripts/app.js</vh>
 <v t="fil.20171126152802.1"></v>
 </v>
-<v t="fil.20171125220624.1"><vh>@clean src/scripts/libraries.js</vh>
+<v t="fil.20171125220624.1" a="E"><vh>@clean src/scripts/libraries.js</vh>
 <v t="fil.20171125220307.1"></v>
 <v t="fil.20171126222002.1"></v>
 </v>
@@ -89,7 +97,8 @@ var gulp        = require('gulp'),
     imageMin    = require('gulp-imagemin'),
     uglify      = require('gulp-uglify'),
     browserSync = require('browser-sync'),
-    del         = require('del');
+    del         = require('del'),
+    log         = console.log;
     
     // ****************************** Common unused
     //autoprefixer    = require('gulp-autoprefixer');
@@ -109,8 +118,18 @@ var paths = {
   // output
   build   : "dist"
 };
-
-gulp.task('default', ['build']);
+gulp.task('default', function(){
+  log(""); 
+  log("   --------------------------------------");
+  log("                 gulp tasks              ");
+  log("   --------------------------------------");
+  log("    Build into dist/ folder from src/" );
+  log("    &gt; gulp build ");
+  log("  ");  
+  log("    Build and live reload in browser" );
+  log("    &gt; gulp browser ");
+  log("\n"); 
+});
 
 gulp.task('build', ['clean', 'html', 'ico', 'images', 'scripts', 'styles']);
 
@@ -297,11 +316,11 @@ Vector.prototype.dot=function(p_v) {
 };
 
 Vector.prototype.cross=function(p_v) {
-  var x = (this.y*p_v.z)-(this.z*p_v.y);
-  var y = (this.z*p_v.x)-(this.x*p_v.z);
+  var w_x = (this.y*p_v.z)-(this.z*p_v.y); // Protect x and y while computing
+  var w_y = (this.z*p_v.x)-(this.x*p_v.z);
   this.z = (this.x*p_v.y)-(this.y*p_v.x);
-  this.x = x;
-  this.y = y;
+  this.x = w_x;
+  this.y = w_y;
   return this;
 };
 
@@ -310,12 +329,21 @@ Vector.prototype.norm=function() {
 };
 
 Vector.prototype.normalize=function() {
-  var norm=this.norm();
-  this.x /= norm;
-  this.y /= norm;
-  this.z /= norm;
+  var w_norm=this.norm();
+  this.x /= w_norm;
+  this.y /= w_norm;
+  this.z /= w_norm;
   return this;
 };
+
+Vector.shapes = [
+  "Cylinder",
+  "CylinderShell",
+  "RectangularPrism",
+  "Cuboid",
+  "Sphere",
+  "SphericalShell"
+ ];
 
 // Make all vector methods also available directly on Vector with additional first parameter.
 // such as :
@@ -331,14 +359,6 @@ for (var w_key in Vector.prototype){
     })(w_key);
   }
 }
-
-
-
-
-
-
-
-
 </t>
 <t tx="fil.20171125220624.1">@others
 </t>
@@ -373,56 +393,167 @@ console.log("Vector.test: ", Vector.test(22, 99));
 @tabwidth -2
 @nowrap
 window.log = console.log;
-window.onload = function () { main();};
+window.onload = function () {main();};
 
 function main(){
- 
+
   var elements=[];
-  elements.push( new PointMass(1, 2,0,0) );
-  elements.push( new PointMass(1, 6,0,0) );
-    
-  function centerGravity(p_elements){
-    var i;
-    var w_totalMass=0;
-    for (i = 0; i &lt; p_elements.length; i++){
-      w_totalMass += p_elements[i].mass;
-    }
-    var w_firstMoment = new Vector(0,0,0);
-    for (i = 0; i &lt; p_elements.length; i++){
-      w_firstMoment.add( Vector.multiply( p_elements[i].pos, p_elements[i].mass) );
-    }
-    return w_firstMoment.multiply( 1/w_totalMass );
-  }
+  elements.push( new PointMass(1, 2,0,0));
+  elements.push( new PointMass(1, 6,0,0));
 
-  function momentOfInertia(p_elements){
-    var i;
-    var w_centerGravity = centerGravity(p_elements);
+  log(Vector.shapes);
 
-    var w_pos=[]; // corrected positions from center of gravity
-    for (i = 0; i &lt; p_elements.length; i++){
-      w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
-    }
-    var w_m = new Vector(0,0,0);
-    for (i = 0; i &lt; p_elements.length; i++){
-      w_m.add(new Vector( w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z,
-                          w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z,
-                          w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y
-                        ).multiply(p_elements[i].mass)
-            );
-    }
-    return w_m;
-  }
-  
-  log("momentOfInertia: ", momentOfInertia(elements) );
+  log("momentOfInertia: ",  momentOfInertia(elements));
+
+  // log(solidMomentOfInertia("Cylinder",         1, 1,2,6));
+  // log(solidMomentOfInertia("CylinderShell",    1, 1,2,6));
+  // log(solidMomentOfInertia("rectangularPrism", 1, 1,2,6));
+  // log(solidMomentOfInertia("cuboid",           1, 1,2,6));
+  // log(solidMomentOfInertia("sphere",           1, 1,2,6));
+  // log(solidMomentOfInertia("sphericalShell",   1, 1,2,6));
+
+  // IMPERIAL MEASURES
+  //var body    = new Cuboid(3913,  100, 100, 0,  15.5, 6.0, 4.1);
+  //var driver = new Cuboid( 190,  103, 105, 0,   3.0, 1.5, 3.5);
+  //var fuel   = new Cuboid( 210,   93, 100, 0,   1.5, 3.0, 1.0);
+
+
+  var body   = new Cuboid( 17500/9.81 ,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
+  var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
+  var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
+
+  car = [ body, driver, fuel ];
+
+  log("totalemass: ", totalMass(car),"kg" );
+
+  log( "centerGravity car :" , centerGravity(car) );
+  log( "momentOfInertia car :",  momentOfInertia(car) );
+
 }
 </t>
 <t tx="fil.20171126222002.1">@language javascript
 @tabwidth -2
+@others
+</t>
+<t tx="fil.20171202212813.1">function PointMass(p_mass, p_x, p_y, p_z) { // Constructor
+  this.mass = p_mass;
+  this.pos = new Vector(p_x, p_y, p_z);
+}
+PointMass.prototype.solidMomentOfInertia = function() {
+  return new Vector(0,0,0);
+};
+</t>
+<t tx="fil.20171202212845.1">function Cuboid(p_m, p_x, p_y, p_z, p_length, p_width, p_height){ // Constructor
+  PointMass.call(this, p_m, p_x, p_y, p_z);
+  this.length = p_length; // Length in X axis, width in Y axis, height in Z
+  this.width  = p_width;
+  this.height = p_height;
+}
+Cuboid.prototype = Object.create(PointMass.prototype);
+Cuboid.prototype.constructor = Cuboid;
 
-function PointMass(p_m, p_x, p_y, p_z) { // Constructor
-  this.mass = p_m;
-  this.pos = new Vector(p_x, p_y, p_z);  
+Cuboid.prototype.solidMomentOfInertia = function() {
+  return solidMomentOfInertia(this.constructor.name, this.mass, this.length, this.width, this.height)
+};
+</t>
+<t tx="fil.20171202213029.1">function centerGravity(p_elements){
+  var i;
+  var w_firstMoment = new Vector(0,0,0);
+  for (i = 0; i &lt; p_elements.length; i++){ // m*x,m*y,m*z / Σm
+    w_firstMoment.add( Vector.multiply( p_elements[i].pos, p_elements[i].mass) );
+  }
+  return w_firstMoment.divide(totalMass(p_elements));
 }
 </t>
+<t tx="fil.20171202213032.1">function momentOfInertia(p_elements){
+  var i;
+  var w_centerGravity = centerGravity(p_elements);
+
+  var w_pos=[]; // corrected positions from center of gravity
+  for (i = 0; i &lt; p_elements.length; i++){
+    w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
+  }
+  log("pos", w_pos);
+  var w_m = new Vector(0,0,0);
+  var w_mn; // moment about own neutral axis
+  var d2;
+  for (i = 0; i &lt; p_elements.length; i++){ // Parallel Axis Theorem
+                                           // MomentInertiaNeutral + Mass*distance^2 
+                                           // mn+ m*(yy+zz), mn+ m*(xx+zz), mn+ m*(xx+yy)
+    w_mn = p_elements[i].solidMomentOfInertia();
+    log("solidMomentOfInertia",w_mn);
+    log("mass", p_elements[i].mass);
+    d2 = new Vector((w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z),
+                                  (w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z),
+                                  (w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y) 
+                                 );
+    
+    w_m.add( w_mn.add( d2.multiply(p_elements[i].mass)));
+    log("2",w_mn);
+  }
+  return w_m;
+}
+</t>
+<t tx="fil.20171202213112.1">function solidMomentOfInertia(p_shapeString, p_mass, p_1, p_2, p_3){
+  // p_1 = Radius in the XY plane or p_1=X,[p_2=Y],[last is p_2 or p_3=Lenght in Z]
+  var w_m;
+  switch(p_shapeString) {
+    case "Cylinder": // X = Y = (1/4)mr^2 + (1/12)mL^2 ; Z = (1/2)mr^2
+      w_m = new Vector(
+        0.25*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
+        0.25*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
+        0.5*p_mass*p_1*p_1
+      );
+      break;
+    case "CylinderShell": // X = Y = (1/2)mr^2 + (1/12)mL^2 ; Z = mr^2
+      w_m = new Vector(
+        0.5*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
+        0.5*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
+        p_mass*p_1*p_1
+      );
+      break;
+    case "Cuboid": // X = (1/12)m*(Y^2+Z^2) Y = (1/12)m*(X^2+Z^2) Z = (1/12)m*(X^2+Y^2)
+    case "RectangularPrism":
+      w_m = new Vector(
+        (1/12)*(p_mass*(p_2*p_2+p_3*p_3)),
+        (1/12)*(p_mass*(p_1*p_1+p_3*p_3)),
+        (1/12)*(p_mass*(p_1*p_1+p_2*p_2))
+      );
+      break;
+    case "Sphere": // X = Y = Z = (2/5)mr^2
+      w_m = new Vector(
+        (2/5)*(p_mass*p_1*p_1),
+        (2/5)*(p_mass*p_1*p_1),
+        (2/5)*(p_mass*p_1*p_1)
+      );
+      break;
+    case "SphericalShell": // X = Y = Z = (2/3)mr^2
+      w_m = new Vector(
+        (2/3)*(p_mass*p_1*p_1),
+        (2/3)*(p_mass*p_1*p_1),
+        (2/3)*(p_mass*p_1*p_1)
+      );
+      break;
+
+    default:
+      if( (Vector.shapes.indexOf(p_shapeString) &gt; -1)){
+        throw "Invalid Strings Definition : Vector.shapes is OUTDATED";
+      }else {
+        throw "Invalid Geometric Shape String Parameter :  "+p_shapeString;
+      }
+  }
+  return w_m;
+}
+</t>
+<t tx="fil.20171202231233.1">function totalMass(p_elements){
+  var i;
+  var w_totalMass=0;
+  for (i = 0; i &lt; p_elements.length; i++){ // Σm
+    w_totalMass += p_elements[i].mass;
+  }
+  return w_totalMass;
+}
+</t>
+<t tx="fil.20171212225812.1"></t>
 </tnodes>
 </leo_file>

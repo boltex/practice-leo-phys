@@ -9,7 +9,8 @@ var gulp        = require('gulp'),
     imageMin    = require('gulp-imagemin'),
     uglify      = require('gulp-uglify'),
     browserSync = require('browser-sync'),
-    del         = require('del');
+    del         = require('del'),
+    log         = console.log;
     
     // ****************************** Common unused
     //autoprefixer    = require('gulp-autoprefixer');
@@ -29,8 +30,18 @@ var paths = {
   // output
   build   : "dist"
 };
-
-gulp.task('default', ['build']);
+gulp.task('default', function(){
+  log(""); 
+  log("   --------------------------------------");
+  log("                 gulp tasks              ");
+  log("   --------------------------------------");
+  log("    Build into dist/ folder from src/" );
+  log("    > gulp build ");
+  log("  ");  
+  log("    Build and live reload in browser" );
+  log("    > gulp browser ");
+  log("\n"); 
+});
 
 gulp.task('build', ['clean', 'html', 'ico', 'images', 'scripts', 'styles']);
 

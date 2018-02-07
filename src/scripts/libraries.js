@@ -1,37 +1,3 @@
-
-window.log = console.log;
-window.onload = function () {main();};
-
-function main(){
-
-  var elements=[];
-  elements.push( new PointMass(1, 2,0,0));
-  elements.push( new PointMass(1, 6,0,0));
-  log("inertiaTensor: ",  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
-
-  // IMPERIAL MEASURES
-  //var body    = new Cuboid(3913,  100, 100, 0,  15.5, 6.0, 4.1);
-  //var driver  = new Cuboid( 190,  103, 105, 0,   3.0, 1.5, 3.5);
-  //var fuel    = new Cuboid( 210,   93, 100, 0,   1.5, 3.0, 1.0);
-
-  var body   = new Cuboid( 17500/9.81,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
-  var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
-  var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
-
-  car = [ body, driver, fuel ];
-
-  log("totalemass: ", totalMass(car),"kg" ); // 1971.76 kg
-  log( "centerGravity car :" , centerGravity(car) ); // x: 30.41, y: 30.52, z: 0
-  
-  // TESTS matrix 3x3
-   var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant 26
-  
-   log( "determinant " , m_test.determinant() ); 
-
-  
-  log(  "inertiaTensor car :" , inertiaTensor(car) ); // 752, 4238, 4508
-         
-}
 function Vector(p_x, p_y, p_z) { // Constructor
   this.x = p_x || 0;
   this.y = p_y || 0;
@@ -170,12 +136,61 @@ Matrix3x3.prototype.divide=function(p_s) {
 Matrix3x3.prototype.determinant=function() {
   return this.e11*(this.e22*this.e33-this.e23*this.e32) - this.e12*(this.e21*this.e33-this.e23*this.e31) + this.e13*(this.e21*this.e32-this.e22*this.e31);
 };
+Matrix3x3.prototype.transpose=function() {
+  var w_temp;
+  
+  w_temp = this.e12;
+  this.e12 = this.e21;
+  this.e21 = w_temp;
+  
+  w_temp = this.e13;  
+  this.e13 = this.e31;
+  this.e31 = w_temp;
+  
+  w_temp = this.e23;  
+  this.e23 = this.e32;
+  this.e32 = w_temp;
+  
+  return this;
+};
+Matrix3x3.prototype.inverse=function() {
+
+  // a b c              A D G
+  // d e f  =>  1/det * B E H
+  // g h i              C F I
+
+  // A =  (ei-fh)  D = -(bi-ch)  G =  (bf-ce)  
+  // B = -(di-fg)  E =  (ai-cg)  H = -(af-cd) 
+  // C =  (dh-eg)  F = -(ah-bg)  I =  (ae-bd)  
+  var w_A =   this.e22*this.e33-this.e23*this.e32;
+  var w_B = -(this.e21*this.e33-this.e23*this.e31);
+  var w_C =   this.e21*this.e32-this.e22*this.e31;
+  
+  var w_det = a*W_A + b*W_B + c*W_C;
+    
+  var w_D = -(this.e12*this.e33-this.e13*this.e32);
+  var w_E =   this.e11*this.e33-this.e13*this.e31;
+  var w_F = -(this.e11*this.e32-this.e12*this.e31);
+  
+  var w_G =   this.e12*this.e23-this.e13*this.e22;
+  var w_H = -(this.e11*this.e23-this.e13*this.e21);
+  var w_I =   this.e11*this.e22-this.e12*this.e21;
+  
+  this.e11 = w_A/w_det;
+  this.e12 = w_D/w_det;
+  this.e13 = w_G/w_det;
+  this.e21 = w_B/w_det;
+  this.e22 = w_E/w_det;
+  this.e23 = w_H/w_det;
+  this.e31 = w_C/w_det;
+  this.e33 = w_F/w_det;
+  this.e32 = w_I/w_det;
+  
+  return this;
+};
 /*
   todo :
   ======
-  
-  Transpose
-  Inverse
   MatrixMultiply
   VectorMultiply
 */

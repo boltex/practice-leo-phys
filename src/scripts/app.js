@@ -19,22 +19,18 @@ function main(){
 
   car = [ body, driver, fuel ];
 
-  log("totalemass: ", totalMass(car),"kg" ); // 1971.76 kg
-  log( "centerGravity car :" , centerGravity(car) ); // x: 30.41, y: 30.52, z: 0
-  
-  // TESTS matrix 3x3
-  
-   var m_test  = new Matrix3x3(); 
-   
-   var m_test1 = new Matrix3x3(1,0,2, 3,1,1, 0,0,11);
-   var m_test2 = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5);
-   
-   var m_test3 = m_test.add(m_test1).add(m_test1);
-   
-   log( "m_test3 : " ,  m_test3 );
-   log( "determinant   m_test2 " + m_test2.determinant() ); 
+  log("   totalemass car : ", totalMass(car), " kg"); // 1971.76 kg
+  log("centerGravity car : ", centerGravity(car)); // x: 30.41, y: 30.52, z: 0
+  log("inertiaTensor car : ", inertiaTensor(car)); // 752, 4238, 4508
 
+  // TESTS matrix 3x3
+  var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant is 26
+  var m_test2 = new Matrix3x3(1,1,1, 1,1,1, 1,1,1);
+  log( "determinant " , m_test.add(m_test2).sub(m_test2).multiply(4).divide(2).divide(2).determinant() );
+  log( "transpose " , m_test.transpose() );
   
-  log(  "inertiaTensor car :" , inertiaTensor(car) ); // 752, 4238, 4508
-         
+  
+  
+  log("inverse NEEDS TESTING");
+  
 }

@@ -16,7 +16,7 @@
 <v t="fil.20171126150155.1"><vh>old test</vh></v>
 <v t="fil.20171126152802.1"><vh>app</vh></v>
 <v t="fil.20171125220307.1" a="E"><vh>maths</vh>
-<v t="fil.20180115213517.1" a="E"><vh>Vector</vh>
+<v t="fil.20180115213517.1"><vh>Vector</vh>
 <v t="fil.20180128231824.1"><vh>Constructor</vh></v>
 <v t="fil.20180128231835.1"><vh>Add</vh></v>
 <v t="fil.20180128231923.1"><vh>Subtract</vh></v>
@@ -36,11 +36,13 @@
 <v t="fil.20180204185742.1"><vh>Multiply</vh></v>
 <v t="fil.20180204185745.1"><vh>Divide</vh></v>
 <v t="fil.20180206211603.1"><vh>Determinant</vh></v>
+<v t="fil.20180206221402.1"><vh>Transpose</vh></v>
+<v t="fil.20180206224318.1" a="M"><vh>Inverse</vh></v>
 </v>
 <v t="fil.20180204185249.1" a="M"><vh>Quaternion</vh></v>
 </v>
 <v t="fil.20171126222002.1" a="E"><vh>physics</vh>
-<v t="fil.20180206210238.1"><vh>Solids</vh>
+<v t="fil.20180206210238.1" a="E"><vh>Solids</vh>
 <v t="fil.20171202212813.1"><vh>PointMass(mass, x, y, z)</vh></v>
 <v t="fil.20171202212845.1"><vh>Cuboid(mass, x, y, z, length, width, height)</vh></v>
 <v t="fil.20180206203816.1"><vh>Cylinder(mass, x, y, z, radius, length)</vh></v>
@@ -52,7 +54,7 @@
 <v t="fil.20171202213029.1"><vh>centerGravity(elements)</vh></v>
 <v t="fil.20180204202031.1"><vh>inertiaTensor(elements)</vh></v>
 </v>
-<v t="fil.20171113165739.1"><vh>Source Files</vh>
+<v t="fil.20171113165739.1" a="E"><vh>Source Files</vh>
 <v t="fil.20171118225356.1"><vh>script: create folders</vh></v>
 <v t="fil.20171119191756.1"><vh>HTML</vh>
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
@@ -79,7 +81,7 @@
 <v t="fil.20171113233419.1" a="E"><vh>@clean src/scripts/app.js</vh>
 <v t="fil.20171126152802.1"></v>
 </v>
-<v t="fil.20171125220624.1"><vh>@clean src/scripts/libraries.js</vh>
+<v t="fil.20171125220624.1" a="E"><vh>@clean src/scripts/libraries.js</vh>
 <v t="fil.20171125220307.1" a="E"></v>
 <v t="fil.20171126222002.1" a="E"></v>
 </v>
@@ -308,7 +310,6 @@ node_modules
 <t tx="fil.20171125211124.1"></t>
 <t tx="fil.20171125220307.1">@language javascript
 @tabwidth -2
-
 @others
 </t>
 <t tx="fil.20171125220624.1">@others
@@ -364,24 +365,20 @@ function main(){
 
   car = [ body, driver, fuel ];
 
-  log("totalemass: ", totalMass(car),"kg" ); // 1971.76 kg
-  log( "centerGravity car :" , centerGravity(car) ); // x: 30.41, y: 30.52, z: 0
-  
-  // TESTS matrix 3x3
-  
-   var m_test  = new Matrix3x3(); 
-   
-   var m_test1 = new Matrix3x3(1,0,2, 3,1,1, 0,0,11);
-   var m_test2 = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5);
-   
-   var m_test3 = m_test.add(m_test1).add(m_test1);
-   
-   log( "m_test3 : " ,  m_test3 );
-   log( "determinant   m_test2 " + m_test2.determinant() ); 
+  log("   totalemass car : ", totalMass(car), " kg"); // 1971.76 kg
+  log("centerGravity car : ", centerGravity(car)); // x: 30.41, y: 30.52, z: 0
+  log("inertiaTensor car : ", inertiaTensor(car)); // 752, 4238, 4508
 
+  // TESTS matrix 3x3
+  var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant is 26
+  var m_test2 = new Matrix3x3(1,1,1, 1,1,1, 1,1,1);
+  log( "determinant " , m_test.add(m_test2).sub(m_test2).multiply(4).divide(2).divide(2).determinant() );
+  log( "transpose " , m_test.transpose() );
   
-  log(  "inertiaTensor car :" , inertiaTensor(car) ); // 752, 4238, 4508
-         
+  
+  
+  log("inverse NEEDS TESTING");
+  
 }
 </t>
 <t tx="fil.20171126222002.1">@language javascript
@@ -594,9 +591,6 @@ for (var w_key in Vector.prototype){
 /*
   todo :
   ======
-  
-  Transpose
-  Inverse
   MatrixMultiply
   VectorMultiply
 */
@@ -723,7 +717,9 @@ Cylinder.prototype.solidMomentOfInertia = function() {
         0.25*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
         0.5* this.mass*this.radius*this.radius
       );
-};</t>
+};
+
+</t>
 <t tx="fil.20180206203832.1">function CylinderShell(p_mass, p_x, p_y, p_z, p_radius, p_length){ // Constructor
   PointMass.call(this, p_mass, p_x, p_y, p_z);
   this.radius = p_radius;
@@ -738,7 +734,9 @@ CylinderShell.prototype.solidMomentOfInertia = function() {
         0.5*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
         this.mass*this.radius*this.radius
       );
-};</t>
+};
+
+</t>
 <t tx="fil.20180206203919.1">function Sphere(p_mass, p_x, p_y, p_z, p_radius){ // Constructor
   PointMass.call(this, p_mass, p_x, p_y, p_z);
   this.radius = p_radius;
@@ -773,6 +771,60 @@ SphericalShell.prototype.solidMomentOfInertia = function() {
 </t>
 <t tx="fil.20180206211603.1">Matrix3x3.prototype.determinant=function() {
   return this.e11*(this.e22*this.e33-this.e23*this.e32) - this.e12*(this.e21*this.e33-this.e23*this.e31) + this.e13*(this.e21*this.e32-this.e22*this.e31);
+};
+</t>
+<t tx="fil.20180206221402.1">Matrix3x3.prototype.transpose=function() {
+  var w_temp;
+  
+  w_temp = this.e12;
+  this.e12 = this.e21;
+  this.e21 = w_temp;
+  
+  w_temp = this.e13;  
+  this.e13 = this.e31;
+  this.e31 = w_temp;
+  
+  w_temp = this.e23;  
+  this.e23 = this.e32;
+  this.e32 = w_temp;
+  
+  return this;
+};
+</t>
+<t tx="fil.20180206224318.1">Matrix3x3.prototype.inverse=function() {
+
+  // a b c              A D G
+  // d e f  =&gt;  1/det * B E H
+  // g h i              C F I
+
+  // A =  (ei-fh)  D = -(bi-ch)  G =  (bf-ce)  
+  // B = -(di-fg)  E =  (ai-cg)  H = -(af-cd) 
+  // C =  (dh-eg)  F = -(ah-bg)  I =  (ae-bd)  
+  var w_A =   this.e22*this.e33-this.e23*this.e32;
+  var w_B = -(this.e21*this.e33-this.e23*this.e31);
+  var w_C =   this.e21*this.e32-this.e22*this.e31;
+  
+  var w_det = a*W_A + b*W_B + c*W_C;
+    
+  var w_D = -(this.e12*this.e33-this.e13*this.e32);
+  var w_E =   this.e11*this.e33-this.e13*this.e31;
+  var w_F = -(this.e11*this.e32-this.e12*this.e31);
+  
+  var w_G =   this.e12*this.e23-this.e13*this.e22;
+  var w_H = -(this.e11*this.e23-this.e13*this.e21);
+  var w_I =   this.e11*this.e22-this.e12*this.e21;
+  
+  this.e11 = w_A/w_det;
+  this.e12 = w_D/w_det;
+  this.e13 = w_G/w_det;
+  this.e21 = w_B/w_det;
+  this.e22 = w_E/w_det;
+  this.e23 = w_H/w_det;
+  this.e31 = w_C/w_det;
+  this.e33 = w_F/w_det;
+  this.e32 = w_I/w_det;
+  
+  return this;
 };
 </t>
 </tnodes>

@@ -1,10 +1,42 @@
 
+window.log = console.log;
+window.onload = function () {main();};
+
+function main(){
+
+  var elements=[];
+  elements.push( new PointMass(1, 2,0,0));
+  elements.push( new PointMass(1, 6,0,0));
+  log("inertiaTensor: ",  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
+
+  // IMPERIAL MEASURES
+  //var body    = new Cuboid(3913,  100, 100, 0,  15.5, 6.0, 4.1);
+  //var driver  = new Cuboid( 190,  103, 105, 0,   3.0, 1.5, 3.5);
+  //var fuel    = new Cuboid( 210,   93, 100, 0,   1.5, 3.0, 1.0);
+
+  var body   = new Cuboid( 17500/9.81,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
+  var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
+  var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
+
+  car = [ body, driver, fuel ];
+
+  log("totalemass: ", totalMass(car),"kg" ); // 1971.76 kg
+  log( "centerGravity car :" , centerGravity(car) ); // x: 30.41, y: 30.52, z: 0
+  
+  // TESTS matrix 3x3
+   var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant 26
+  
+   log( "determinant " , m_test.determinant() ); 
+
+  
+  log(  "inertiaTensor car :" , inertiaTensor(car) ); // 752, 4238, 4508
+         
+}
 function Vector(p_x, p_y, p_z) { // Constructor
   this.x = p_x || 0;
   this.y = p_y || 0;
   this.z = p_z || 0;
 }
-
 Vector.prototype.add=function(p_v) {
   this.x += p_v.x;
   this.y += p_v.y;
@@ -17,7 +49,6 @@ Vector.prototype.sub=function(p_v) {
   this.z -= p_v.z;
   return this;
 };
-
 Vector.prototype.multiply=function(p_s) {
   this.x *= p_s;
   this.y *= p_s;
@@ -30,11 +61,9 @@ Vector.prototype.divide=function(p_s) {
   this.z /= p_s;
   return this;
 };
-
 Vector.prototype.dot=function(p_v) {
   return p_v.x*this.x + p_v.y*this.y + p_v.z*this.z;
 };
-
 Vector.prototype.cross=function(p_v) {
   var w_x = (this.y*p_v.z)-(this.z*p_v.y); // Protect x and y while computing
   var w_y = (this.z*p_v.x)-(this.x*p_v.z);
@@ -43,32 +72,28 @@ Vector.prototype.cross=function(p_v) {
   this.y = w_y;
   return this;
 };
-
 Vector.prototype.norm=function() {
   return Math.sqrt(this.dot(this));
 };
-
 Vector.prototype.normalize=function() {
-  var w_norm=this.norm();
+  var w_length=this.norm();
   this.x /= w_norm;
   this.y /= w_norm;
   this.z /= w_norm;
   return this;
 };
+Vector.prototype.tripleScalarProduct=function() {
 
-Vector.shapes = [
-  "Cylinder",
-  "CylinderShell",
-  "RectangularPrism",
-  "Cuboid",
-  "Sphere",
-  "SphericalShell"
- ];
+  //TODO
+};
+Vector.prototype.tripleVectorProduct=function() {
 
-// Make all vector methods also available directly on Vector with additional first parameter.
+  //TODO
+};
+
+// Make all methods also available directly on 'Vector' with an additional first parameter.
 // such as :
 // v3 = Vector.add(v1, v2) // will return a new sum vector v3. Neither v1 nor v2 will change.
-
 for (var w_key in Vector.prototype){
   if(Vector.prototype.hasOwnProperty(w_key)){
     (function(w_key){
@@ -79,6 +104,82 @@ for (var w_key in Vector.prototype){
     })(w_key);
   }
 }
+function Matrix3x3( p_e11, p_e12, p_e13,
+                    p_e21, p_e22, p_e23,
+                    p_e31, p_e32, p_e33 ) { // Constructor
+  this.e11 = p_e11 || 0;
+  this.e12 = p_e12 || 0;
+  this.e13 = p_e13 || 0;
+  this.e21 = p_e21 || 0;
+  this.e22 = p_e22 || 0;
+  this.e23 = p_e23 || 0;
+  this.e31 = p_e31 || 0;
+  this.e32 = p_e32 || 0;
+  this.e33 = p_e33 || 0;
+}
+
+Matrix3x3.prototype.add=function(p_m) {
+  this.e11 += p_m.e11;
+  this.e12 += p_m.e12;
+  this.e13 += p_m.e13;
+  this.e21 += p_m.e21;
+  this.e22 += p_m.e22;
+  this.e23 += p_m.e23;
+  this.e31 += p_m.e31;
+  this.e32 += p_m.e32;
+  this.e33 += p_m.e33;
+  return this;
+};
+
+Matrix3x3.prototype.sub=function(p_m) {
+  this.e11 -= p_m.e11;
+  this.e12 -= p_m.e12;
+  this.e13 -= p_m.e13;
+  this.e21 -= p_m.e21;
+  this.e22 -= p_m.e22;
+  this.e23 -= p_m.e23;
+  this.e31 -= p_m.e31;
+  this.e32 -= p_m.e32;
+  this.e33 -= p_m.e33;
+  return this;
+};
+Matrix3x3.prototype.multiply=function(p_s) {
+  this.e11 *= p_s;
+  this.e12 *= p_s;
+  this.e13 *= p_s;
+  this.e21 *= p_s;
+  this.e22 *= p_s;
+  this.e23 *= p_s;
+  this.e31 *= p_s;
+  this.e32 *= p_s;
+  this.e33 *= p_s;
+  return this;
+};
+Matrix3x3.prototype.divide=function(p_s) {
+  this.e11 /= p_s;
+  this.e12 /= p_s;
+  this.e13 /= p_s;
+  this.e21 /= p_s;
+  this.e22 /= p_s;
+  this.e23 /= p_s;
+  this.e31 /= p_s;
+  this.e32 /= p_s;
+  this.e33 /= p_s;
+  return this;
+};
+Matrix3x3.prototype.determinant=function() {
+  return this.e11*(this.e22*this.e33-this.e23*this.e32) - this.e12*(this.e21*this.e33-this.e23*this.e31) + this.e13*(this.e21*this.e32-this.e22*this.e31);
+};
+/*
+  todo :
+  ======
+  
+  Transpose
+  Inverse
+  MatrixMultiply
+  VectorMultiply
+*/
+
 function PointMass(p_mass, p_x, p_y, p_z) { // Constructor
   this.mass = p_mass;
   this.pos = new Vector(p_x, p_y, p_z);
@@ -86,8 +187,8 @@ function PointMass(p_mass, p_x, p_y, p_z) { // Constructor
 PointMass.prototype.solidMomentOfInertia = function() {
   return new Vector(0,0,0);
 };
-function Cuboid(p_m, p_x, p_y, p_z, p_length, p_width, p_height){ // Constructor
-  PointMass.call(this, p_m, p_x, p_y, p_z);
+function Cuboid(p_mass, p_x, p_y, p_z, p_length, p_width, p_height){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
   this.length = p_length; // Length in X axis, width in Y axis, height in Z
   this.width  = p_width;
   this.height = p_height;
@@ -96,7 +197,71 @@ Cuboid.prototype = Object.create(PointMass.prototype);
 Cuboid.prototype.constructor = Cuboid;
 
 Cuboid.prototype.solidMomentOfInertia = function() {
-  return solidMomentOfInertia(this.constructor.name, this.mass, this.length, this.width, this.height)
+  return new Vector(
+        (1/12)*(this.mass*(this.width* this.width+ this.height*this.height)),
+        (1/12)*(this.mass*(this.length*this.length+this.height*this.height)),
+        (1/12)*(this.mass*(this.length*this.length+this.width* this.width))
+      );
+};
+function Cylinder(p_mass, p_x, p_y, p_z, p_radius, p_length){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+  this.length = p_length;
+}
+Cylinder.prototype = Object.create(PointMass.prototype);
+Cylinder.prototype.constructor = Cylinder;
+
+Cylinder.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        0.25*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        0.25*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        0.5* this.mass*this.radius*this.radius
+      );
+};
+
+function CylinderShell(p_mass, p_x, p_y, p_z, p_radius, p_length){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+  this.length = p_length;
+}
+CylinderShell.prototype = Object.create(PointMass.prototype);
+CylinderShell.prototype.constructor = CylinderShell;
+
+CylinderShell.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        0.5*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        0.5*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        this.mass*this.radius*this.radius
+      );
+};
+
+function Sphere(p_mass, p_x, p_y, p_z, p_radius){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+}
+Sphere.prototype = Object.create(PointMass.prototype);
+Sphere.prototype.constructor = Sphere;
+
+Sphere.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        (0.4)*(this.mass*this.radius*this.radius),
+        (0.4)*(this.mass*this.radius*this.radius),
+        (0.4)*(this.mass*this.radius*this.radius)
+      );
+};
+function SphericalShell(p_mass, p_x, p_y, p_z, p_radius){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+}
+SphericalShell.prototype = Object.create(PointMass.prototype);
+SphericalShell.prototype.constructor = SphericalShell;
+
+SphericalShell.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        (2/3)*(this.mass*this.radius*this.radius),
+        (2/3)*(this.mass*this.radius*this.radius),
+        (2/3)*(this.mass*this.radius*this.radius)
+      );
 };
 function totalMass(p_elements){
   var i;
@@ -114,7 +279,7 @@ function centerGravity(p_elements){
   }
   return w_firstMoment.divide(totalMass(p_elements));
 }
-function momentOfInertia(p_elements){
+function inertiaTensor(p_elements){
   var i;
   var w_centerGravity = centerGravity(p_elements);
 
@@ -122,73 +287,32 @@ function momentOfInertia(p_elements){
   for (i = 0; i < p_elements.length; i++){
     w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
   }
-  log("pos", w_pos);
-  var w_m = new Vector(0,0,0);
+
+  var w_ixx=0;
+  var w_iyy=0;
+  var w_izz=0;
+  var w_ixy=0;
+  var w_ixz=0;
+  var w_iyz=0;
+
   var w_mn; // moment about own neutral axis
+
   var d2;
   for (i = 0; i < p_elements.length; i++){ // Parallel Axis Theorem
-                                           // MomentInertiaNeutral + Mass*distance^2 
+                                           // MomentInertiaNeutral + Mass*distance^2
                                            // mn+ m*(yy+zz), mn+ m*(xx+zz), mn+ m*(xx+yy)
     w_mn = p_elements[i].solidMomentOfInertia();
-    log("solidMomentOfInertia",w_mn);
-    log("mass", p_elements[i].mass);
-    d2 = new Vector((w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z),
-                                  (w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z),
-                                  (w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y) 
-                                 );
-    
-    w_m.add( w_mn.add( d2.multiply(p_elements[i].mass)));
-    log("2",w_mn);
-  }
-  return w_m;
-}
-function solidMomentOfInertia(p_shapeString, p_mass, p_1, p_2, p_3){
-  // p_1 = Radius in the XY plane or p_1=X,[p_2=Y],[last is p_2 or p_3=Lenght in Z]
-  var w_m;
-  switch(p_shapeString) {
-    case "Cylinder": // X = Y = (1/4)mr^2 + (1/12)mL^2 ; Z = (1/2)mr^2
-      w_m = new Vector(
-        0.25*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        0.25*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        0.5*p_mass*p_1*p_1
-      );
-      break;
-    case "CylinderShell": // X = Y = (1/2)mr^2 + (1/12)mL^2 ; Z = mr^2
-      w_m = new Vector(
-        0.5*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        0.5*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        p_mass*p_1*p_1
-      );
-      break;
-    case "Cuboid": // X = (1/12)m*(Y^2+Z^2) Y = (1/12)m*(X^2+Z^2) Z = (1/12)m*(X^2+Y^2)
-    case "RectangularPrism":
-      w_m = new Vector(
-        (1/12)*(p_mass*(p_2*p_2+p_3*p_3)),
-        (1/12)*(p_mass*(p_1*p_1+p_3*p_3)),
-        (1/12)*(p_mass*(p_1*p_1+p_2*p_2))
-      );
-      break;
-    case "Sphere": // X = Y = Z = (2/5)mr^2
-      w_m = new Vector(
-        (2/5)*(p_mass*p_1*p_1),
-        (2/5)*(p_mass*p_1*p_1),
-        (2/5)*(p_mass*p_1*p_1)
-      );
-      break;
-    case "SphericalShell": // X = Y = Z = (2/3)mr^2
-      w_m = new Vector(
-        (2/3)*(p_mass*p_1*p_1),
-        (2/3)*(p_mass*p_1*p_1),
-        (2/3)*(p_mass*p_1*p_1)
-      );
-      break;
 
-    default:
-      if( (Vector.shapes.indexOf(p_shapeString) > -1)){
-        throw "Invalid Strings Definition : Vector.shapes is OUTDATED";
-      }else {
-        throw "Invalid Geometric Shape String Parameter :  "+p_shapeString;
-      }
+    w_ixx += w_mn.x + p_elements[i].mass * (w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z);
+    w_iyy += w_mn.y + p_elements[i].mass * (w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z);
+    w_izz += w_mn.z + p_elements[i].mass * (w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y);
+
+    w_ixy -= p_elements[i].mass * (w_pos[i].x*w_pos[i].y); // products of inertia are negative values.
+    w_ixz -= p_elements[i].mass * (w_pos[i].x*w_pos[i].z);
+    w_iyz -= p_elements[i].mass * (w_pos[i].y*w_pos[i].z);
   }
+  var w_m = new Matrix3x3(w_ixx, w_ixy, w_ixz,
+                          w_ixy, w_iyy, w_iyz,
+                          w_ixz, w_iyz, w_izz ); // Tensor
   return w_m;
 }

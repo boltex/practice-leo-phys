@@ -10,19 +10,49 @@
 <find_panel_settings/>
 <vnodes>
 <v t="fil.20171118201906.1"><vh>Introduction</vh></v>
+<v t="fil.20180114215850.1"><vh>Structure Example</vh></v>
+<v t="fil.20180114220144.1"><vh>Structure Example 2</vh></v>
+<v t="fil.20180115231750.1"><vh>Structure Example 3</vh></v>
 <v t="fil.20171126150155.1"><vh>old test</vh></v>
 <v t="fil.20171126152802.1"><vh>app</vh></v>
-<v t="fil.20171125220307.1"><vh>maths</vh></v>
-<v t="fil.20171126222002.1"><vh>physics</vh>
+<v t="fil.20171125220307.1" a="E"><vh>maths</vh>
+<v t="fil.20180115213517.1" a="E"><vh>Vector</vh>
+<v t="fil.20180128231824.1"><vh>Constructor</vh></v>
+<v t="fil.20180128231835.1"><vh>Add</vh></v>
+<v t="fil.20180128231923.1"><vh>Subtract</vh></v>
+<v t="fil.20180128231938.1"><vh>Multiply</vh></v>
+<v t="fil.20180128231949.1"><vh>Divide</vh></v>
+<v t="fil.20180128232001.1"><vh>Dot Product</vh></v>
+<v t="fil.20180128232012.1"><vh>Cross Product</vh></v>
+<v t="fil.20180128232053.1"><vh>Norm</vh></v>
+<v t="fil.20180128232319.1"><vh>Normalize</vh></v>
+<v t="fil.20180203235459.1" a="M"><vh>Triple Scalar Product</vh></v>
+<v t="fil.20180203235513.1" a="M"><vh>Triple Vector Product</vh></v>
+</v>
+<v t="fil.20180204145927.1" a="EM"><vh>Matrix3x3</vh>
+<v t="fil.20180204150431.1"><vh>Constructor</vh></v>
+<v t="fil.20180204150501.1"><vh>Add</vh></v>
+<v t="fil.20180204185738.1"><vh>Subtract</vh></v>
+<v t="fil.20180204185742.1"><vh>Multiply</vh></v>
+<v t="fil.20180204185745.1"><vh>Divide</vh></v>
+<v t="fil.20180206211603.1"><vh>Determinant</vh></v>
+</v>
+<v t="fil.20180204185249.1" a="M"><vh>Quaternion</vh></v>
+</v>
+<v t="fil.20171126222002.1" a="E"><vh>physics</vh>
+<v t="fil.20180206210238.1"><vh>Solids</vh>
 <v t="fil.20171202212813.1"><vh>PointMass(mass, x, y, z)</vh></v>
-<v t="fil.20171212225812.1"><vh>Solid(mass, x,y,z)</vh></v>
 <v t="fil.20171202212845.1"><vh>Cuboid(mass, x, y, z, length, width, height)</vh></v>
+<v t="fil.20180206203816.1"><vh>Cylinder(mass, x, y, z, radius, length)</vh></v>
+<v t="fil.20180206203832.1"><vh>CylinderShell(mass, x, y, z, radius, length</vh></v>
+<v t="fil.20180206203919.1"><vh>Sphere(mass, x, y, z, radius)</vh></v>
+<v t="fil.20180206203933.1"><vh>SphericalShell(mass, x, y, z, radius)</vh></v>
+</v>
 <v t="fil.20171202231233.1"><vh>totalMass(elements)</vh></v>
 <v t="fil.20171202213029.1"><vh>centerGravity(elements)</vh></v>
-<v t="fil.20171202213032.1"><vh>momentOfInertia(elements)</vh></v>
-<v t="fil.20171202213112.1"><vh>solidMomentOfInertia(shapeStr, mass, p1, p2, p3)</vh></v>
+<v t="fil.20180204202031.1"><vh>inertiaTensor(elements)</vh></v>
 </v>
-<v t="fil.20171113165739.1" a="E"><vh>Source Files</vh>
+<v t="fil.20171113165739.1"><vh>Source Files</vh>
 <v t="fil.20171118225356.1"><vh>script: create folders</vh></v>
 <v t="fil.20171119191756.1"><vh>HTML</vh>
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
@@ -46,12 +76,12 @@
 <v t="fil.20171119191903.1"><vh>@clean src/styles/style.less</vh></v>
 </v>
 <v t="fil.20171119191824.1"><vh>Scripts</vh>
-<v t="fil.20171113233419.1"><vh>@clean src/scripts/app.js</vh>
+<v t="fil.20171113233419.1" a="E"><vh>@clean src/scripts/app.js</vh>
 <v t="fil.20171126152802.1"></v>
 </v>
-<v t="fil.20171125220624.1" a="E"><vh>@clean src/scripts/libraries.js</vh>
-<v t="fil.20171125220307.1"></v>
-<v t="fil.20171126222002.1"></v>
+<v t="fil.20171125220624.1"><vh>@clean src/scripts/libraries.js</vh>
+<v t="fil.20171125220307.1" a="E"></v>
+<v t="fil.20171126222002.1" a="E"></v>
 </v>
 </v>
 </v>
@@ -279,86 +309,7 @@ node_modules
 <t tx="fil.20171125220307.1">@language javascript
 @tabwidth -2
 
-function Vector(p_x, p_y, p_z) { // Constructor
-  this.x = p_x || 0;
-  this.y = p_y || 0;
-  this.z = p_z || 0;
-}
-
-Vector.prototype.add=function(p_v) {
-  this.x += p_v.x;
-  this.y += p_v.y;
-  this.z += p_v.z;
-  return this;
-};
-Vector.prototype.sub=function(p_v) {
-  this.x -= p_v.x;
-  this.y -= p_v.y;
-  this.z -= p_v.z;
-  return this;
-};
-
-Vector.prototype.multiply=function(p_s) {
-  this.x *= p_s;
-  this.y *= p_s;
-  this.z *= p_s;
-  return this;
-};
-Vector.prototype.divide=function(p_s) {
-  this.x /= p_s;
-  this.y /= p_s;
-  this.z /= p_s;
-  return this;
-};
-
-Vector.prototype.dot=function(p_v) {
-  return p_v.x*this.x + p_v.y*this.y + p_v.z*this.z;
-};
-
-Vector.prototype.cross=function(p_v) {
-  var w_x = (this.y*p_v.z)-(this.z*p_v.y); // Protect x and y while computing
-  var w_y = (this.z*p_v.x)-(this.x*p_v.z);
-  this.z = (this.x*p_v.y)-(this.y*p_v.x);
-  this.x = w_x;
-  this.y = w_y;
-  return this;
-};
-
-Vector.prototype.norm=function() {
-  return Math.sqrt(this.dot(this));
-};
-
-Vector.prototype.normalize=function() {
-  var w_norm=this.norm();
-  this.x /= w_norm;
-  this.y /= w_norm;
-  this.z /= w_norm;
-  return this;
-};
-
-Vector.shapes = [
-  "Cylinder",
-  "CylinderShell",
-  "RectangularPrism",
-  "Cuboid",
-  "Sphere",
-  "SphericalShell"
- ];
-
-// Make all vector methods also available directly on Vector with additional first parameter.
-// such as :
-// v3 = Vector.add(v1, v2) // will return a new sum vector v3. Neither v1 nor v2 will change.
-
-for (var w_key in Vector.prototype){
-  if(Vector.prototype.hasOwnProperty(w_key)){
-    (function(w_key){
-      Vector[w_key] = function(){
-        var v = new Vector(arguments[0].x, arguments[0].y, arguments[0].z);
-        return v[w_key].apply(v, Array.prototype.slice.call(arguments, 1) );
-      };
-    })(w_key);
-  }
-}
+@others
 </t>
 <t tx="fil.20171125220624.1">@others
 </t>
@@ -400,35 +351,37 @@ function main(){
   var elements=[];
   elements.push( new PointMass(1, 2,0,0));
   elements.push( new PointMass(1, 6,0,0));
-
-  log(Vector.shapes);
-
-  log("momentOfInertia: ",  momentOfInertia(elements));
-
-  // log(solidMomentOfInertia("Cylinder",         1, 1,2,6));
-  // log(solidMomentOfInertia("CylinderShell",    1, 1,2,6));
-  // log(solidMomentOfInertia("rectangularPrism", 1, 1,2,6));
-  // log(solidMomentOfInertia("cuboid",           1, 1,2,6));
-  // log(solidMomentOfInertia("sphere",           1, 1,2,6));
-  // log(solidMomentOfInertia("sphericalShell",   1, 1,2,6));
+  log("inertiaTensor: ",  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
 
   // IMPERIAL MEASURES
   //var body    = new Cuboid(3913,  100, 100, 0,  15.5, 6.0, 4.1);
-  //var driver = new Cuboid( 190,  103, 105, 0,   3.0, 1.5, 3.5);
-  //var fuel   = new Cuboid( 210,   93, 100, 0,   1.5, 3.0, 1.0);
+  //var driver  = new Cuboid( 190,  103, 105, 0,   3.0, 1.5, 3.5);
+  //var fuel    = new Cuboid( 210,   93, 100, 0,   1.5, 3.0, 1.0);
 
-
-  var body   = new Cuboid( 17500/9.81 ,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
+  var body   = new Cuboid( 17500/9.81,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
   var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
   var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
 
   car = [ body, driver, fuel ];
 
-  log("totalemass: ", totalMass(car),"kg" );
+  log("totalemass: ", totalMass(car),"kg" ); // 1971.76 kg
+  log( "centerGravity car :" , centerGravity(car) ); // x: 30.41, y: 30.52, z: 0
+  
+  // TESTS matrix 3x3
+  
+   var m_test  = new Matrix3x3(); 
+   
+   var m_test1 = new Matrix3x3(1,0,2, 3,1,1, 0,0,11);
+   var m_test2 = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5);
+   
+   var m_test3 = m_test.add(m_test1).add(m_test1);
+   
+   log( "m_test3 : " ,  m_test3 );
+   log( "determinant   m_test2 " + m_test2.determinant() ); 
 
-  log( "centerGravity car :" , centerGravity(car) );
-  log( "momentOfInertia car :",  momentOfInertia(car) );
-
+  
+  log(  "inertiaTensor car :" , inertiaTensor(car) ); // 752, 4238, 4508
+         
 }
 </t>
 <t tx="fil.20171126222002.1">@language javascript
@@ -443,8 +396,8 @@ PointMass.prototype.solidMomentOfInertia = function() {
   return new Vector(0,0,0);
 };
 </t>
-<t tx="fil.20171202212845.1">function Cuboid(p_m, p_x, p_y, p_z, p_length, p_width, p_height){ // Constructor
-  PointMass.call(this, p_m, p_x, p_y, p_z);
+<t tx="fil.20171202212845.1">function Cuboid(p_mass, p_x, p_y, p_z, p_length, p_width, p_height){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
   this.length = p_length; // Length in X axis, width in Y axis, height in Z
   this.width  = p_width;
   this.height = p_height;
@@ -453,7 +406,11 @@ Cuboid.prototype = Object.create(PointMass.prototype);
 Cuboid.prototype.constructor = Cuboid;
 
 Cuboid.prototype.solidMomentOfInertia = function() {
-  return solidMomentOfInertia(this.constructor.name, this.mass, this.length, this.width, this.height)
+  return new Vector(
+        (1/12)*(this.mass*(this.width* this.width+ this.height*this.height)),
+        (1/12)*(this.mass*(this.length*this.length+this.height*this.height)),
+        (1/12)*(this.mass*(this.length*this.length+this.width* this.width))
+      );
 };
 </t>
 <t tx="fil.20171202213029.1">function centerGravity(p_elements){
@@ -465,86 +422,6 @@ Cuboid.prototype.solidMomentOfInertia = function() {
   return w_firstMoment.divide(totalMass(p_elements));
 }
 </t>
-<t tx="fil.20171202213032.1">function momentOfInertia(p_elements){
-  var i;
-  var w_centerGravity = centerGravity(p_elements);
-
-  var w_pos=[]; // corrected positions from center of gravity
-  for (i = 0; i &lt; p_elements.length; i++){
-    w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
-  }
-  log("pos", w_pos);
-  var w_m = new Vector(0,0,0);
-  var w_mn; // moment about own neutral axis
-  var d2;
-  for (i = 0; i &lt; p_elements.length; i++){ // Parallel Axis Theorem
-                                           // MomentInertiaNeutral + Mass*distance^2 
-                                           // mn+ m*(yy+zz), mn+ m*(xx+zz), mn+ m*(xx+yy)
-    w_mn = p_elements[i].solidMomentOfInertia();
-    log("solidMomentOfInertia",w_mn);
-    log("mass", p_elements[i].mass);
-    d2 = new Vector((w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z),
-                                  (w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z),
-                                  (w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y) 
-                                 );
-    
-    w_m.add( w_mn.add( d2.multiply(p_elements[i].mass)));
-    log("2",w_mn);
-  }
-  return w_m;
-}
-</t>
-<t tx="fil.20171202213112.1">function solidMomentOfInertia(p_shapeString, p_mass, p_1, p_2, p_3){
-  // p_1 = Radius in the XY plane or p_1=X,[p_2=Y],[last is p_2 or p_3=Lenght in Z]
-  var w_m;
-  switch(p_shapeString) {
-    case "Cylinder": // X = Y = (1/4)mr^2 + (1/12)mL^2 ; Z = (1/2)mr^2
-      w_m = new Vector(
-        0.25*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        0.25*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        0.5*p_mass*p_1*p_1
-      );
-      break;
-    case "CylinderShell": // X = Y = (1/2)mr^2 + (1/12)mL^2 ; Z = mr^2
-      w_m = new Vector(
-        0.5*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        0.5*p_mass*p_1*p_1 + (1/12)*(p_mass*p_2*p_2),
-        p_mass*p_1*p_1
-      );
-      break;
-    case "Cuboid": // X = (1/12)m*(Y^2+Z^2) Y = (1/12)m*(X^2+Z^2) Z = (1/12)m*(X^2+Y^2)
-    case "RectangularPrism":
-      w_m = new Vector(
-        (1/12)*(p_mass*(p_2*p_2+p_3*p_3)),
-        (1/12)*(p_mass*(p_1*p_1+p_3*p_3)),
-        (1/12)*(p_mass*(p_1*p_1+p_2*p_2))
-      );
-      break;
-    case "Sphere": // X = Y = Z = (2/5)mr^2
-      w_m = new Vector(
-        (2/5)*(p_mass*p_1*p_1),
-        (2/5)*(p_mass*p_1*p_1),
-        (2/5)*(p_mass*p_1*p_1)
-      );
-      break;
-    case "SphericalShell": // X = Y = Z = (2/3)mr^2
-      w_m = new Vector(
-        (2/3)*(p_mass*p_1*p_1),
-        (2/3)*(p_mass*p_1*p_1),
-        (2/3)*(p_mass*p_1*p_1)
-      );
-      break;
-
-    default:
-      if( (Vector.shapes.indexOf(p_shapeString) &gt; -1)){
-        throw "Invalid Strings Definition : Vector.shapes is OUTDATED";
-      }else {
-        throw "Invalid Geometric Shape String Parameter :  "+p_shapeString;
-      }
-  }
-  return w_m;
-}
-</t>
 <t tx="fil.20171202231233.1">function totalMass(p_elements){
   var i;
   var w_totalMass=0;
@@ -554,6 +431,349 @@ Cuboid.prototype.solidMomentOfInertia = function() {
   return w_totalMass;
 }
 </t>
-<t tx="fil.20171212225812.1"></t>
+<t tx="fil.20180114215850.1">@language javascript
+
+(function ($, MyObject, undefined) {
+  MyObject.publicFunction = function() {
+      console.log("This is a public function!");
+  };
+  var privateFunction = function() {
+    console.log("This is a private function!");
+  };
+  
+  MyObject.sayStuff = function() {
+    this.publicFunction();
+    privateFunction();
+    privateNumber++;
+    console.log(privateNumber);
+  };
+  var privateNumber = 0;
+}(jQuery, window.MyObject = window.MyObject || {}));
+
+MyObject.sayStuff();
+MyObject.sayStuff();
+MyObject.publicFunction();
+MyObject.privateFunction(); // Returns error
+privateFunction(); // Returns error</t>
+<t tx="fil.20180114220144.1">@language javascript
+
+// namespace (our namespace name) and undefined are passed here
+// to ensure 1. namespace can be modified locally and isn't
+// overwritten outside of our function context
+// 2. the value of undefined is guaranteed as being truly
+// undefined. This is to avoid issues with undefined being
+// mutable pre-ES5.
+
+;(function ( namespace, undefined ) {
+    // private properties
+    var foo = "foo",
+        bar = "bar";
+
+    // public methods and properties
+    namespace.foobar = "foobar";
+    namespace.sayHello = function () {
+        speak("hello world");
+    };
+
+    // private method
+    function speak(msg) {
+        console.log("You said: " + msg);
+    };
+
+    // check to evaluate whether 'namespace' exists in the
+    // global namespace - if not, assign window.namespace an
+    // object literal
+})(window.namespace = window.namespace || {});
+
+
+// we can then test our properties and methods as follows
+
+// public
+console.log(namespace.foobar); // foobar
+namescpace.sayHello(); // hello world
+
+// assigning new properties
+namespace.foobar2 = "foobar";
+console.log(namespace.foobar2);
+
+</t>
+<t tx="fil.20180115213517.1">@others
+
+// Make all methods also available directly on 'Vector' with an additional first parameter.
+// such as :
+// v3 = Vector.add(v1, v2) // will return a new sum vector v3. Neither v1 nor v2 will change.
+for (var w_key in Vector.prototype){
+  if(Vector.prototype.hasOwnProperty(w_key)){
+    (function(w_key){
+      Vector[w_key] = function(){
+        var v = new Vector(arguments[0].x, arguments[0].y, arguments[0].z);
+        return v[w_key].apply(v, Array.prototype.slice.call(arguments, 1) );
+      };
+    })(w_key);
+  }
+}
+</t>
+<t tx="fil.20180115231750.1">@language javascript
+
+//Example : creating in closure : inside self executing function
+
+;(function ( namespace, undefined ) {
+  @others  // library math-&gt;Vector
+  namespace.Vector = Vector;
+})(window = window || {});</t>
+<t tx="fil.20180128231824.1">function Vector(p_x, p_y, p_z) { // Constructor
+  this.x = p_x || 0;
+  this.y = p_y || 0;
+  this.z = p_z || 0;
+}
+</t>
+<t tx="fil.20180128231835.1">Vector.prototype.add=function(p_v) {
+  this.x += p_v.x;
+  this.y += p_v.y;
+  this.z += p_v.z;
+  return this;
+};
+</t>
+<t tx="fil.20180128231923.1">Vector.prototype.sub=function(p_v) {
+  this.x -= p_v.x;
+  this.y -= p_v.y;
+  this.z -= p_v.z;
+  return this;
+};
+</t>
+<t tx="fil.20180128231938.1">Vector.prototype.multiply=function(p_s) {
+  this.x *= p_s;
+  this.y *= p_s;
+  this.z *= p_s;
+  return this;
+};
+</t>
+<t tx="fil.20180128231949.1">Vector.prototype.divide=function(p_s) {
+  this.x /= p_s;
+  this.y /= p_s;
+  this.z /= p_s;
+  return this;
+};
+</t>
+<t tx="fil.20180128232001.1">Vector.prototype.dot=function(p_v) {
+  return p_v.x*this.x + p_v.y*this.y + p_v.z*this.z;
+};
+</t>
+<t tx="fil.20180128232012.1">Vector.prototype.cross=function(p_v) {
+  var w_x = (this.y*p_v.z)-(this.z*p_v.y); // Protect x and y while computing
+  var w_y = (this.z*p_v.x)-(this.x*p_v.z);
+  this.z = (this.x*p_v.y)-(this.y*p_v.x);
+  this.x = w_x;
+  this.y = w_y;
+  return this;
+};
+</t>
+<t tx="fil.20180128232053.1">Vector.prototype.norm=function() {
+  return Math.sqrt(this.dot(this));
+};
+</t>
+<t tx="fil.20180128232319.1">Vector.prototype.normalize=function() {
+  var w_length=this.norm();
+  this.x /= w_norm;
+  this.y /= w_norm;
+  this.z /= w_norm;
+  return this;
+};
+</t>
+<t tx="fil.20180203235459.1">Vector.prototype.tripleScalarProduct=function() {
+
+  //TODO
+};
+</t>
+<t tx="fil.20180203235513.1">Vector.prototype.tripleVectorProduct=function() {
+
+  //TODO
+};
+</t>
+<t tx="fil.20180204145927.1">@others
+/*
+  todo :
+  ======
+  
+  Transpose
+  Inverse
+  MatrixMultiply
+  VectorMultiply
+*/
+
+</t>
+<t tx="fil.20180204150431.1">function Matrix3x3( p_e11, p_e12, p_e13,
+                    p_e21, p_e22, p_e23,
+                    p_e31, p_e32, p_e33 ) { // Constructor
+  this.e11 = p_e11 || 0;
+  this.e12 = p_e12 || 0;
+  this.e13 = p_e13 || 0;
+  this.e21 = p_e21 || 0;
+  this.e22 = p_e22 || 0;
+  this.e23 = p_e23 || 0;
+  this.e31 = p_e31 || 0;
+  this.e32 = p_e32 || 0;
+  this.e33 = p_e33 || 0;
+}
+
+</t>
+<t tx="fil.20180204150501.1">Matrix3x3.prototype.add=function(p_m) {
+  this.e11 += p_m.e11;
+  this.e12 += p_m.e12;
+  this.e13 += p_m.e13;
+  this.e21 += p_m.e21;
+  this.e22 += p_m.e22;
+  this.e23 += p_m.e23;
+  this.e31 += p_m.e31;
+  this.e32 += p_m.e32;
+  this.e33 += p_m.e33;
+  return this;
+};
+
+</t>
+<t tx="fil.20180204185249.1"></t>
+<t tx="fil.20180204185738.1">Matrix3x3.prototype.sub=function(p_m) {
+  this.e11 -= p_m.e11;
+  this.e12 -= p_m.e12;
+  this.e13 -= p_m.e13;
+  this.e21 -= p_m.e21;
+  this.e22 -= p_m.e22;
+  this.e23 -= p_m.e23;
+  this.e31 -= p_m.e31;
+  this.e32 -= p_m.e32;
+  this.e33 -= p_m.e33;
+  return this;
+};
+</t>
+<t tx="fil.20180204185742.1">Matrix3x3.prototype.multiply=function(p_s) {
+  this.e11 *= p_s;
+  this.e12 *= p_s;
+  this.e13 *= p_s;
+  this.e21 *= p_s;
+  this.e22 *= p_s;
+  this.e23 *= p_s;
+  this.e31 *= p_s;
+  this.e32 *= p_s;
+  this.e33 *= p_s;
+  return this;
+};
+</t>
+<t tx="fil.20180204185745.1">Matrix3x3.prototype.divide=function(p_s) {
+  this.e11 /= p_s;
+  this.e12 /= p_s;
+  this.e13 /= p_s;
+  this.e21 /= p_s;
+  this.e22 /= p_s;
+  this.e23 /= p_s;
+  this.e31 /= p_s;
+  this.e32 /= p_s;
+  this.e33 /= p_s;
+  return this;
+};
+</t>
+<t tx="fil.20180204202031.1">function inertiaTensor(p_elements){
+  var i;
+  var w_centerGravity = centerGravity(p_elements);
+
+  var w_pos=[]; // corrected positions from center of gravity
+  for (i = 0; i &lt; p_elements.length; i++){
+    w_pos[i] = Vector.sub(p_elements[i].pos, w_centerGravity);
+  }
+
+  var w_ixx=0;
+  var w_iyy=0;
+  var w_izz=0;
+  var w_ixy=0;
+  var w_ixz=0;
+  var w_iyz=0;
+
+  var w_mn; // moment about own neutral axis
+
+  var d2;
+  for (i = 0; i &lt; p_elements.length; i++){ // Parallel Axis Theorem
+                                           // MomentInertiaNeutral + Mass*distance^2
+                                           // mn+ m*(yy+zz), mn+ m*(xx+zz), mn+ m*(xx+yy)
+    w_mn = p_elements[i].solidMomentOfInertia();
+
+    w_ixx += w_mn.x + p_elements[i].mass * (w_pos[i].y*w_pos[i].y + w_pos[i].z*w_pos[i].z);
+    w_iyy += w_mn.y + p_elements[i].mass * (w_pos[i].x*w_pos[i].x + w_pos[i].z*w_pos[i].z);
+    w_izz += w_mn.z + p_elements[i].mass * (w_pos[i].x*w_pos[i].x + w_pos[i].y*w_pos[i].y);
+
+    w_ixy -= p_elements[i].mass * (w_pos[i].x*w_pos[i].y); // products of inertia are negative values.
+    w_ixz -= p_elements[i].mass * (w_pos[i].x*w_pos[i].z);
+    w_iyz -= p_elements[i].mass * (w_pos[i].y*w_pos[i].z);
+  }
+  var w_m = new Matrix3x3(w_ixx, w_ixy, w_ixz,
+                          w_ixy, w_iyy, w_iyz,
+                          w_ixz, w_iyz, w_izz ); // Tensor
+  return w_m;
+}
+</t>
+<t tx="fil.20180206203816.1">function Cylinder(p_mass, p_x, p_y, p_z, p_radius, p_length){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+  this.length = p_length;
+}
+Cylinder.prototype = Object.create(PointMass.prototype);
+Cylinder.prototype.constructor = Cylinder;
+
+Cylinder.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        0.25*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        0.25*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        0.5* this.mass*this.radius*this.radius
+      );
+};</t>
+<t tx="fil.20180206203832.1">function CylinderShell(p_mass, p_x, p_y, p_z, p_radius, p_length){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+  this.length = p_length;
+}
+CylinderShell.prototype = Object.create(PointMass.prototype);
+CylinderShell.prototype.constructor = CylinderShell;
+
+CylinderShell.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        0.5*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        0.5*this.mass*this.radius*this.radius + (1/12)*(this.mass*this.length*this.length),
+        this.mass*this.radius*this.radius
+      );
+};</t>
+<t tx="fil.20180206203919.1">function Sphere(p_mass, p_x, p_y, p_z, p_radius){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+}
+Sphere.prototype = Object.create(PointMass.prototype);
+Sphere.prototype.constructor = Sphere;
+
+Sphere.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        (0.4)*(this.mass*this.radius*this.radius),
+        (0.4)*(this.mass*this.radius*this.radius),
+        (0.4)*(this.mass*this.radius*this.radius)
+      );
+};
+</t>
+<t tx="fil.20180206203933.1">function SphericalShell(p_mass, p_x, p_y, p_z, p_radius){ // Constructor
+  PointMass.call(this, p_mass, p_x, p_y, p_z);
+  this.radius = p_radius;
+}
+SphericalShell.prototype = Object.create(PointMass.prototype);
+SphericalShell.prototype.constructor = SphericalShell;
+
+SphericalShell.prototype.solidMomentOfInertia = function() {
+  return new Vector(
+        (2/3)*(this.mass*this.radius*this.radius),
+        (2/3)*(this.mass*this.radius*this.radius),
+        (2/3)*(this.mass*this.radius*this.radius)
+      );
+};
+</t>
+<t tx="fil.20180206210238.1">@others
+</t>
+<t tx="fil.20180206211603.1">Matrix3x3.prototype.determinant=function() {
+  return this.e11*(this.e22*this.e33-this.e23*this.e32) - this.e12*(this.e21*this.e33-this.e23*this.e31) + this.e13*(this.e21*this.e32-this.e22*this.e31);
+};
+</t>
 </tnodes>
 </leo_file>

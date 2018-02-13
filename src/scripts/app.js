@@ -26,11 +26,18 @@ function main(){
   // TESTS matrix 3x3
   var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant is 26
   var m_test2 = new Matrix3x3(1,1,1, 1,1,1, 1,1,1);
+  var m_test3 = new Matrix3x3(1,3,-2, 2,1,4, 5,7,3);
+
   log( "determinant " , m_test.add(m_test2).sub(m_test2).multiply(4).divide(2).divide(2).determinant() );
-  log( "transpose " , m_test.transpose() );
+  //log( "transpose " , m_test.transpose() );
+  //log( "inverse" , m_test.inverse() );
+  log( "matrixMultiply" , m_test.matrixMultiply(m_test3) );
+
+  // test scalar and vector triple products
+  log("m_test3 " , m_test3);
+
+  // tripleScalarProduct
+  // tripleVectorProduct
   
-  
-  
-  log("inverse NEEDS TESTING");
   
 }

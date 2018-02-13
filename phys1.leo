@@ -16,20 +16,21 @@
 <v t="fil.20171126150155.1"><vh>old test</vh></v>
 <v t="fil.20171126152802.1"><vh>app</vh></v>
 <v t="fil.20171125220307.1" a="E"><vh>maths</vh>
-<v t="fil.20180115213517.1"><vh>Vector</vh>
+<v t="fil.20180115213517.1" a="E"><vh>Vector</vh>
 <v t="fil.20180128231824.1"><vh>Constructor</vh></v>
 <v t="fil.20180128231835.1"><vh>Add</vh></v>
 <v t="fil.20180128231923.1"><vh>Subtract</vh></v>
 <v t="fil.20180128231938.1"><vh>Multiply</vh></v>
 <v t="fil.20180128231949.1"><vh>Divide</vh></v>
+<v t="fil.20180211210915.1"><vh>reverse</vh></v>
 <v t="fil.20180128232001.1"><vh>Dot Product</vh></v>
 <v t="fil.20180128232012.1"><vh>Cross Product</vh></v>
 <v t="fil.20180128232053.1"><vh>Norm</vh></v>
 <v t="fil.20180128232319.1"><vh>Normalize</vh></v>
-<v t="fil.20180203235459.1" a="M"><vh>Triple Scalar Product</vh></v>
-<v t="fil.20180203235513.1" a="M"><vh>Triple Vector Product</vh></v>
+<v t="fil.20180203235459.1"><vh>Triple Scalar Product</vh></v>
+<v t="fil.20180203235513.1"><vh>Triple Vector Product</vh></v>
 </v>
-<v t="fil.20180204145927.1" a="EM"><vh>Matrix3x3</vh>
+<v t="fil.20180204145927.1"><vh>Matrix3x3</vh>
 <v t="fil.20180204150431.1"><vh>Constructor</vh></v>
 <v t="fil.20180204150501.1"><vh>Add</vh></v>
 <v t="fil.20180204185738.1"><vh>Subtract</vh></v>
@@ -37,11 +38,12 @@
 <v t="fil.20180204185745.1"><vh>Divide</vh></v>
 <v t="fil.20180206211603.1"><vh>Determinant</vh></v>
 <v t="fil.20180206221402.1"><vh>Transpose</vh></v>
-<v t="fil.20180206224318.1" a="M"><vh>Inverse</vh></v>
+<v t="fil.20180206224318.1"><vh>Inverse</vh></v>
+<v t="fil.20180211123545.1"><vh>Matrix Multiply</vh></v>
+<v t="fil.20180211123557.1"><vh>Vector Multiply</vh></v>
 </v>
-<v t="fil.20180204185249.1" a="M"><vh>Quaternion</vh></v>
 </v>
-<v t="fil.20171126222002.1" a="E"><vh>physics</vh>
+<v t="fil.20171126222002.1"><vh>physics</vh>
 <v t="fil.20180206210238.1" a="E"><vh>Solids</vh>
 <v t="fil.20171202212813.1"><vh>PointMass(mass, x, y, z)</vh></v>
 <v t="fil.20171202212845.1"><vh>Cuboid(mass, x, y, z, length, width, height)</vh></v>
@@ -54,7 +56,7 @@
 <v t="fil.20171202213029.1"><vh>centerGravity(elements)</vh></v>
 <v t="fil.20180204202031.1"><vh>inertiaTensor(elements)</vh></v>
 </v>
-<v t="fil.20171113165739.1" a="E"><vh>Source Files</vh>
+<v t="fil.20171113165739.1"><vh>Source Files</vh>
 <v t="fil.20171118225356.1"><vh>script: create folders</vh></v>
 <v t="fil.20171119191756.1"><vh>HTML</vh>
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
@@ -78,12 +80,12 @@
 <v t="fil.20171119191903.1"><vh>@clean src/styles/style.less</vh></v>
 </v>
 <v t="fil.20171119191824.1"><vh>Scripts</vh>
-<v t="fil.20171113233419.1" a="E"><vh>@clean src/scripts/app.js</vh>
+<v t="fil.20171113233419.1"><vh>@clean src/scripts/app.js</vh>
 <v t="fil.20171126152802.1"></v>
 </v>
-<v t="fil.20171125220624.1" a="E"><vh>@clean src/scripts/libraries.js</vh>
+<v t="fil.20171125220624.1"><vh>@clean src/scripts/libraries.js</vh>
 <v t="fil.20171125220307.1" a="E"></v>
-<v t="fil.20171126222002.1" a="E"></v>
+<v t="fil.20171126222002.1"></v>
 </v>
 </v>
 </v>
@@ -372,12 +374,19 @@ function main(){
   // TESTS matrix 3x3
   var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant is 26
   var m_test2 = new Matrix3x3(1,1,1, 1,1,1, 1,1,1);
+  var m_test3 = new Matrix3x3(1,3,-2, 2,1,4, 5,7,3);
+
   log( "determinant " , m_test.add(m_test2).sub(m_test2).multiply(4).divide(2).divide(2).determinant() );
-  log( "transpose " , m_test.transpose() );
+  //log( "transpose " , m_test.transpose() );
+  //log( "inverse" , m_test.inverse() );
+  log( "matrixMultiply" , m_test.matrixMultiply(m_test3) );
+
+  // test scalar and vector triple products
+  log("m_test3 " , m_test3);
+
+  // tripleScalarProduct
+  // tripleVectorProduct
   
-  
-  
-  log("inverse NEEDS TESTING");
   
 }
 </t>
@@ -577,24 +586,24 @@ for (var w_key in Vector.prototype){
   return this;
 };
 </t>
-<t tx="fil.20180203235459.1">Vector.prototype.tripleScalarProduct=function() {
+<t tx="fil.20180203235459.1">Vector.prototype.tripleScalarProduct=function(p_b, p_c) {
 
-  //TODO
+  // a . (b x c) or (a x b) . c
+
+  // The scalar triple product can also be understood as the determinant of the 3×3 matrix (thus also its inverse) having the three vectors either as its rows or its columns (a matrix has the same determinant as its transpose)
+
+  return this.dot( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
 };
 </t>
-<t tx="fil.20180203235513.1">Vector.prototype.tripleVectorProduct=function() {
+<t tx="fil.20180203235513.1">Vector.prototype.tripleVectorProduct=function(p_b, p_c) {
 
-  //TODO
+  //              "BAC - CAB" mnemonic
+  // a x (b x c) = b(a.c) - c(a.b) 
+  
+  return this.cross( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
 };
 </t>
 <t tx="fil.20180204145927.1">@others
-/*
-  todo :
-  ======
-  MatrixMultiply
-  VectorMultiply
-*/
-
 </t>
 <t tx="fil.20180204150431.1">function Matrix3x3( p_e11, p_e12, p_e13,
                     p_e21, p_e22, p_e23,
@@ -609,7 +618,6 @@ for (var w_key in Vector.prototype){
   this.e32 = p_e32 || 0;
   this.e33 = p_e33 || 0;
 }
-
 </t>
 <t tx="fil.20180204150501.1">Matrix3x3.prototype.add=function(p_m) {
   this.e11 += p_m.e11;
@@ -623,9 +631,7 @@ for (var w_key in Vector.prototype){
   this.e33 += p_m.e33;
   return this;
 };
-
 </t>
-<t tx="fil.20180204185249.1"></t>
 <t tx="fil.20180204185738.1">Matrix3x3.prototype.sub=function(p_m) {
   this.e11 -= p_m.e11;
   this.e12 -= p_m.e12;
@@ -775,19 +781,19 @@ SphericalShell.prototype.solidMomentOfInertia = function() {
 </t>
 <t tx="fil.20180206221402.1">Matrix3x3.prototype.transpose=function() {
   var w_temp;
-  
+
   w_temp = this.e12;
   this.e12 = this.e21;
   this.e21 = w_temp;
-  
-  w_temp = this.e13;  
+
+  w_temp = this.e13;
   this.e13 = this.e31;
   this.e31 = w_temp;
-  
-  w_temp = this.e23;  
+
+  w_temp = this.e23;
   this.e23 = this.e32;
   this.e32 = w_temp;
-  
+
   return this;
 };
 </t>
@@ -797,33 +803,82 @@ SphericalShell.prototype.solidMomentOfInertia = function() {
   // d e f  =&gt;  1/det * B E H
   // g h i              C F I
 
-  // A =  (ei-fh)  D = -(bi-ch)  G =  (bf-ce)  
-  // B = -(di-fg)  E =  (ai-cg)  H = -(af-cd) 
-  // C =  (dh-eg)  F = -(ah-bg)  I =  (ae-bd)  
+  // A =  (ei-fh)  D = -(bi-ch)  G =  (bf-ce)
+  // B = -(di-fg)  E =  (ai-cg)  H = -(af-cd)
+  // C =  (dh-eg)  F = -(ah-bg)  I =  (ae-bd)
+
   var w_A =   this.e22*this.e33-this.e23*this.e32;
   var w_B = -(this.e21*this.e33-this.e23*this.e31);
-  var w_C =   this.e21*this.e32-this.e22*this.e31;
-  
-  var w_det = a*W_A + b*W_B + c*W_C;
-    
+  var w_C =   this.e21*this.e32-this.e22*this.e31; // enough for determinant.
+
+  var w_det = this.e11*w_A + this.e12*w_B + this.e13*w_C;
+
   var w_D = -(this.e12*this.e33-this.e13*this.e32);
   var w_E =   this.e11*this.e33-this.e13*this.e31;
   var w_F = -(this.e11*this.e32-this.e12*this.e31);
-  
+
   var w_G =   this.e12*this.e23-this.e13*this.e22;
   var w_H = -(this.e11*this.e23-this.e13*this.e21);
   var w_I =   this.e11*this.e22-this.e12*this.e21;
-  
-  this.e11 = w_A/w_det;
+
+  this.e11 = w_A/w_det; // Order a d g b e h c f i to transpose.
   this.e12 = w_D/w_det;
   this.e13 = w_G/w_det;
   this.e21 = w_B/w_det;
   this.e22 = w_E/w_det;
   this.e23 = w_H/w_det;
   this.e31 = w_C/w_det;
-  this.e33 = w_F/w_det;
-  this.e32 = w_I/w_det;
+  this.e32 = w_F/w_det;
+  this.e33 = w_I/w_det;
+
+  return this;
+};
+</t>
+<t tx="fil.20180211123545.1">Matrix3x3.prototype.matrixMultiply=function(p_m) {
+
+  // this * p_m
   
+  // e11 e12 e13
+  // e21 e22 e23
+  // e31 e32 e33
+  
+  var w_A = this.e11*p_m.e11 + this.e12*p_m.e21 + this.e13*p_m.e31 ;
+  var w_B = this.e11*p_m.e12 + this.e12*p_m.e22 + this.e13*p_m.e32 ;
+  var w_C = this.e11*p_m.e13 + this.e12*p_m.e23 + this.e13*p_m.e33 ;
+
+  var w_D = this.e21*p_m.e11 + this.e22*p_m.e21 + this.e23*p_m.e31 ;
+  var w_E = this.e21*p_m.e12 + this.e22*p_m.e22 + this.e23*p_m.e32 ;
+  var w_F = this.e21*p_m.e13 + this.e22*p_m.e23 + this.e23*p_m.e33 ;
+
+  var w_G = this.e31*p_m.e11 + this.e32*p_m.e21 + this.e33*p_m.e31 ;
+  var w_H = this.e31*p_m.e12 + this.e32*p_m.e22 + this.e33*p_m.e32 ;
+  var w_I = this.e31*p_m.e13 + this.e32*p_m.e23 + this.e33*p_m.e33 ;
+
+  this.e11 = w_A; // same order, no transpose.
+  this.e12 = w_B;
+  this.e13 = w_C;
+  this.e21 = w_D;
+  this.e22 = w_E;
+  this.e23 = w_F;
+  this.e31 = w_G;
+  this.e32 = w_H;
+  this.e33 = w_I;
+  
+  return this;
+};
+</t>
+<t tx="fil.20180211123557.1">Matrix3x3.prototype.vectorMultiply=function(p_v) {
+  return new Vector( 
+    this.e11*p_v.x + this.e12*p_v.y + this.e13*p_v.z,
+    this.e21*p_v.x + this.e22*p_v.y + this.e23*p_v.z,
+    this.e31*p_v.x + this.e32*p_v.y + this.e33*p_v.z
+  );
+};
+</t>
+<t tx="fil.20180211210915.1">Vector.prototype.reverse=function() {
+  this.x = -this.x;
+  this.y = -this.y;
+  this.z = -this.z;
   return this;
 };
 </t>

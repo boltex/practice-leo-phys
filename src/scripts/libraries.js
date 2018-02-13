@@ -27,6 +27,12 @@ Vector.prototype.divide=function(p_s) {
   this.z /= p_s;
   return this;
 };
+Vector.prototype.reverse=function() {
+  this.x = -this.x;
+  this.y = -this.y;
+  this.z = -this.z;
+  return this;
+};
 Vector.prototype.dot=function(p_v) {
   return p_v.x*this.x + p_v.y*this.y + p_v.z*this.z;
 };
@@ -48,13 +54,20 @@ Vector.prototype.normalize=function() {
   this.z /= w_norm;
   return this;
 };
-Vector.prototype.tripleScalarProduct=function() {
+Vector.prototype.tripleScalarProduct=function(p_b, p_c) {
 
-  //TODO
+  // a . (b x c) or (a x b) . c
+
+  // The scalar triple product can also be understood as the determinant of the 3×3 matrix (thus also its inverse) having the three vectors either as its rows or its columns (a matrix has the same determinant as its transpose)
+
+  return this.dot( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
 };
-Vector.prototype.tripleVectorProduct=function() {
+Vector.prototype.tripleVectorProduct=function(p_b, p_c) {
 
-  //TODO
+  //              "BAC - CAB" mnemonic
+  // a x (b x c) = b(a.c) - c(a.b) 
+  
+  return this.cross( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
 };
 
 // Make all methods also available directly on 'Vector' with an additional first parameter.
@@ -83,7 +96,6 @@ function Matrix3x3( p_e11, p_e12, p_e13,
   this.e32 = p_e32 || 0;
   this.e33 = p_e33 || 0;
 }
-
 Matrix3x3.prototype.add=function(p_m) {
   this.e11 += p_m.e11;
   this.e12 += p_m.e12;
@@ -96,7 +108,6 @@ Matrix3x3.prototype.add=function(p_m) {
   this.e33 += p_m.e33;
   return this;
 };
-
 Matrix3x3.prototype.sub=function(p_m) {
   this.e11 -= p_m.e11;
   this.e12 -= p_m.e12;
@@ -138,19 +149,19 @@ Matrix3x3.prototype.determinant=function() {
 };
 Matrix3x3.prototype.transpose=function() {
   var w_temp;
-  
+
   w_temp = this.e12;
   this.e12 = this.e21;
   this.e21 = w_temp;
-  
-  w_temp = this.e13;  
+
+  w_temp = this.e13;
   this.e13 = this.e31;
   this.e31 = w_temp;
-  
-  w_temp = this.e23;  
+
+  w_temp = this.e23;
   this.e23 = this.e32;
   this.e32 = w_temp;
-  
+
   return this;
 };
 Matrix3x3.prototype.inverse=function() {
@@ -159,42 +170,75 @@ Matrix3x3.prototype.inverse=function() {
   // d e f  =>  1/det * B E H
   // g h i              C F I
 
-  // A =  (ei-fh)  D = -(bi-ch)  G =  (bf-ce)  
-  // B = -(di-fg)  E =  (ai-cg)  H = -(af-cd) 
-  // C =  (dh-eg)  F = -(ah-bg)  I =  (ae-bd)  
+  // A =  (ei-fh)  D = -(bi-ch)  G =  (bf-ce)
+  // B = -(di-fg)  E =  (ai-cg)  H = -(af-cd)
+  // C =  (dh-eg)  F = -(ah-bg)  I =  (ae-bd)
+
   var w_A =   this.e22*this.e33-this.e23*this.e32;
   var w_B = -(this.e21*this.e33-this.e23*this.e31);
-  var w_C =   this.e21*this.e32-this.e22*this.e31;
-  
-  var w_det = a*W_A + b*W_B + c*W_C;
-    
+  var w_C =   this.e21*this.e32-this.e22*this.e31; // enough for determinant.
+
+  var w_det = this.e11*w_A + this.e12*w_B + this.e13*w_C;
+
   var w_D = -(this.e12*this.e33-this.e13*this.e32);
   var w_E =   this.e11*this.e33-this.e13*this.e31;
   var w_F = -(this.e11*this.e32-this.e12*this.e31);
-  
+
   var w_G =   this.e12*this.e23-this.e13*this.e22;
   var w_H = -(this.e11*this.e23-this.e13*this.e21);
   var w_I =   this.e11*this.e22-this.e12*this.e21;
-  
-  this.e11 = w_A/w_det;
+
+  this.e11 = w_A/w_det; // Order a d g b e h c f i to transpose.
   this.e12 = w_D/w_det;
   this.e13 = w_G/w_det;
   this.e21 = w_B/w_det;
   this.e22 = w_E/w_det;
   this.e23 = w_H/w_det;
   this.e31 = w_C/w_det;
-  this.e33 = w_F/w_det;
-  this.e32 = w_I/w_det;
+  this.e32 = w_F/w_det;
+  this.e33 = w_I/w_det;
+
+  return this;
+};
+Matrix3x3.prototype.matrixMultiply=function(p_m) {
+
+  // this * p_m
+  
+  // e11 e12 e13
+  // e21 e22 e23
+  // e31 e32 e33
+  
+  var w_A = this.e11*p_m.e11 + this.e12*p_m.e21 + this.e13*p_m.e31 ;
+  var w_B = this.e11*p_m.e12 + this.e12*p_m.e22 + this.e13*p_m.e32 ;
+  var w_C = this.e11*p_m.e13 + this.e12*p_m.e23 + this.e13*p_m.e33 ;
+
+  var w_D = this.e21*p_m.e11 + this.e22*p_m.e21 + this.e23*p_m.e31 ;
+  var w_E = this.e21*p_m.e12 + this.e22*p_m.e22 + this.e23*p_m.e32 ;
+  var w_F = this.e21*p_m.e13 + this.e22*p_m.e23 + this.e23*p_m.e33 ;
+
+  var w_G = this.e31*p_m.e11 + this.e32*p_m.e21 + this.e33*p_m.e31 ;
+  var w_H = this.e31*p_m.e12 + this.e32*p_m.e22 + this.e33*p_m.e32 ;
+  var w_I = this.e31*p_m.e13 + this.e32*p_m.e23 + this.e33*p_m.e33 ;
+
+  this.e11 = w_A; // same order, no transpose.
+  this.e12 = w_B;
+  this.e13 = w_C;
+  this.e21 = w_D;
+  this.e22 = w_E;
+  this.e23 = w_F;
+  this.e31 = w_G;
+  this.e32 = w_H;
+  this.e33 = w_I;
   
   return this;
 };
-/*
-  todo :
-  ======
-  MatrixMultiply
-  VectorMultiply
-*/
-
+Matrix3x3.prototype.vectorMultiply=function(p_v) {
+  return new Vector( 
+    this.e11*p_v.x + this.e12*p_v.y + this.e13*p_v.z,
+    this.e21*p_v.x + this.e22*p_v.y + this.e23*p_v.z,
+    this.e31*p_v.x + this.e32*p_v.y + this.e33*p_v.z
+  );
+};
 function PointMass(p_mass, p_x, p_y, p_z) { // Constructor
   this.mass = p_mass;
   this.pos = new Vector(p_x, p_y, p_z);

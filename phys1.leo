@@ -10,13 +10,17 @@
 <find_panel_settings/>
 <vnodes>
 <v t="fil.20171118201906.1"><vh>Introduction</vh></v>
+<v t="fil.20180527202300.1"><vh>JS encapsulation example.</vh>
 <v t="fil.20180114215850.1"><vh>Structure Example</vh></v>
 <v t="fil.20180114220144.1"><vh>Structure Example 2</vh></v>
 <v t="fil.20180115231750.1"><vh>Structure Example 3</vh></v>
-<v t="fil.20171126150155.1"><vh>old test</vh></v>
-<v t="fil.20171126152802.1"><vh>app</vh></v>
+</v>
+<v t="fil.20171126152802.1" a="E"><vh>app</vh>
+<v t="fil.20180212213947.1"><vh>tests maths and physics</vh></v>
+<v t="fil.20180212213953.1"><vh>tests canvas</vh></v>
+</v>
 <v t="fil.20171125220307.1" a="E"><vh>maths</vh>
-<v t="fil.20180115213517.1" a="E"><vh>Vector</vh>
+<v t="fil.20180115213517.1"><vh>Vector</vh>
 <v t="fil.20180128231824.1"><vh>Constructor</vh></v>
 <v t="fil.20180128231835.1"><vh>Add</vh></v>
 <v t="fil.20180128231923.1"><vh>Subtract</vh></v>
@@ -43,7 +47,7 @@
 <v t="fil.20180211123557.1"><vh>Vector Multiply</vh></v>
 </v>
 </v>
-<v t="fil.20171126222002.1"><vh>physics</vh>
+<v t="fil.20171126222002.1" a="E"><vh>physics</vh>
 <v t="fil.20180206210238.1" a="E"><vh>Solids</vh>
 <v t="fil.20171202212813.1"><vh>PointMass(mass, x, y, z)</vh></v>
 <v t="fil.20171202212845.1"><vh>Cuboid(mass, x, y, z, length, width, height)</vh></v>
@@ -62,15 +66,12 @@
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
 <v t="fil.20171119191851.2"><vh>doctype</vh></v>
 <v t="fil.20171119191851.3"><vh>html</vh>
-<v t="fil.20171119191851.4"><vh>head</vh>
+<v t="fil.20171119191851.4" a="E"><vh>head</vh>
 <v t="fil.20171119191851.5"><vh>Meta</vh></v>
 <v t="fil.20171119191851.6"><vh>Title</vh></v>
 <v t="fil.20171119191851.7"><vh>Styles</vh></v>
 </v>
-<v t="fil.20171119191851.8"><vh>body</vh>
-<v t="fil.20171119191851.9"><vh>Header Test</vh></v>
-<v t="fil.20171119191851.10"><vh>Some test article</vh></v>
-<v t="fil.20171119191851.11"><vh>Some test image</vh></v>
+<v t="fil.20171119191851.8" a="E"><vh>body</vh>
 <v t="fil.20171119191851.12"><vh>Scripts</vh></v>
 </v>
 </v>
@@ -81,11 +82,11 @@
 </v>
 <v t="fil.20171119191824.1"><vh>Scripts</vh>
 <v t="fil.20171113233419.1"><vh>@clean src/scripts/app.js</vh>
-<v t="fil.20171126152802.1"></v>
+<v t="fil.20171126152802.1" a="E"></v>
 </v>
-<v t="fil.20171125220624.1"><vh>@clean src/scripts/libraries.js</vh>
+<v t="fil.20171125220624.1" a="E"><vh>@clean src/scripts/libraries.js</vh>
 <v t="fil.20171125220307.1" a="E"></v>
-<v t="fil.20171126222002.1"></v>
+<v t="fil.20171126222002.1" a="E"></v>
 </v>
 </v>
 </v>
@@ -260,19 +261,6 @@ node_modules
 @tabwidth -4
 @others
 </t>
-<t tx="fil.20171119191851.10">&lt;p class="sample-class"&gt;
-  Some paragraph &lt;br&gt;
-  &lt;span class="inner-class"&gt;with two lines.&lt;/span&gt;
-&lt;/p&gt;
-&lt;p span class="inner-class"&gt;
-  Another paragraph with only one line this time, no color.
-&lt;/p&gt;
-&lt;p class="sample-class"&gt;
-  And a last paragraph with only one line this time.
-&lt;/p&gt;
-</t>
-<t tx="fil.20171119191851.11">&lt;img src="images/testimage.png" alt="test imags" &gt;
-</t>
 <t tx="fil.20171119191851.12">&lt;script src="scripts/scripts.js"&gt;&lt;/script&gt;
 </t>
 <t tx="fil.20171119191851.2">&lt;!DOCTYPE html&gt;
@@ -287,15 +275,13 @@ node_modules
 </t>
 <t tx="fil.20171119191851.5">&lt;meta charset="UTF-8"&gt;
 </t>
-<t tx="fil.20171119191851.6">&lt;title&gt;Physics test generated from Le scscso&lt;/title&gt;
+<t tx="fil.20171119191851.6">&lt;title&gt;Physics test generated from Leo&lt;/title&gt;
 </t>
 <t tx="fil.20171119191851.7">&lt;link rel="stylesheet" href="styles/styles.css"&gt;
 </t>
 <t tx="fil.20171119191851.8">&lt;body&gt;
   @others
 &lt;/body&gt;
-</t>
-<t tx="fil.20171119191851.9">&lt;h2&gt;Some Title&lt;/h2&gt;
 </t>
 <t tx="fil.20171119191903.1">@language css
 
@@ -308,6 +294,12 @@ node_modules
     }
     
 }
+
+#main {
+    border: solid 1px #888
+
+}
+
 </t>
 <t tx="fil.20171125211124.1"></t>
 <t tx="fil.20171125220307.1">@language javascript
@@ -316,33 +308,6 @@ node_modules
 </t>
 <t tx="fil.20171125220624.1">@others
 </t>
-<t tx="fil.20171126150155.1">@language javascript
-@tabwidth -2
-
-function Vector(p_x, p_y, p_z) { // Constructor
-  this.x = p_x || 0;
-  this.y = p_y || 0;
-  this.z = p_z || 0;
-}
-
-Vector.test=function(p1, p2){
-  console.log("in general, gonna tripple", p1, p2);
-  return p1*3;
-};
-
-Vector.prototype.test=function(p1) {
-  console.log("in proto one, gonna double ", p1);
-  return p1*2;
-};
-
-console.log("test app");
-
-v= new Vector(2,3,4);
-
-console.log(v);
-console.log("v.test: ",v.test(22,99));
-console.log("Vector.test: ", Vector.test(22, 99));
-</t>
 <t tx="fil.20171126152802.1">@language javascript
 @tabwidth -2
 @nowrap
@@ -350,44 +315,7 @@ window.log = console.log;
 window.onload = function () {main();};
 
 function main(){
-
-  var elements=[];
-  elements.push( new PointMass(1, 2,0,0));
-  elements.push( new PointMass(1, 6,0,0));
-  log("inertiaTensor: ",  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
-
-  // IMPERIAL MEASURES
-  //var body    = new Cuboid(3913,  100, 100, 0,  15.5, 6.0, 4.1);
-  //var driver  = new Cuboid( 190,  103, 105, 0,   3.0, 1.5, 3.5);
-  //var fuel    = new Cuboid( 210,   93, 100, 0,   1.5, 3.0, 1.0);
-
-  var body   = new Cuboid( 17500/9.81,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
-  var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
-  var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
-
-  car = [ body, driver, fuel ];
-
-  log("   totalemass car : ", totalMass(car), " kg"); // 1971.76 kg
-  log("centerGravity car : ", centerGravity(car)); // x: 30.41, y: 30.52, z: 0
-  log("inertiaTensor car : ", inertiaTensor(car)); // 752, 4238, 4508
-
-  // TESTS matrix 3x3
-  var m_test = new Matrix3x3(2,-2,0, -1,5,1, 3,4,5); // determinant is 26
-  var m_test2 = new Matrix3x3(1,1,1, 1,1,1, 1,1,1);
-  var m_test3 = new Matrix3x3(1,3,-2, 2,1,4, 5,7,3);
-
-  log( "determinant " , m_test.add(m_test2).sub(m_test2).multiply(4).divide(2).divide(2).determinant() );
-  //log( "transpose " , m_test.transpose() );
-  //log( "inverse" , m_test.inverse() );
-  log( "matrixMultiply" , m_test.matrixMultiply(m_test3) );
-
-  // test scalar and vector triple products
-  log("m_test3 " , m_test3);
-
-  // tripleScalarProduct
-  // tripleVectorProduct
-  
-  
+  @others
 }
 </t>
 <t tx="fil.20171126222002.1">@language javascript
@@ -580,9 +508,9 @@ for (var w_key in Vector.prototype){
 </t>
 <t tx="fil.20180128232319.1">Vector.prototype.normalize=function() {
   var w_length=this.norm();
-  this.x /= w_norm;
-  this.y /= w_norm;
-  this.z /= w_norm;
+  this.x /= w_length;
+  this.y /= w_length;
+  this.z /= w_length;
   return this;
 };
 </t>
@@ -590,8 +518,11 @@ for (var w_key in Vector.prototype){
 
   // a . (b x c) or (a x b) . c
 
-  // The scalar triple product can also be understood as the determinant of the 3×3 matrix (thus also its inverse) having the three vectors either as its rows or its columns (a matrix has the same determinant as its transpose)
-
+  // The scalar triple product can also be understood as the
+  // determinant of the 3×3 matrix (thus also its inverse)
+  // having the three vectors either as its rows or its columns
+  // (a matrix has the same determinant as its transpose)
+  
   return this.dot( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
 };
 </t>
@@ -689,7 +620,6 @@ for (var w_key in Vector.prototype){
 
   var w_mn; // moment about own neutral axis
 
-  var d2;
   for (i = 0; i &lt; p_elements.length; i++){ // Parallel Axis Theorem
                                            // MomentInertiaNeutral + Mass*distance^2
                                            // mn+ m*(yy+zz), mn+ m*(xx+zz), mn+ m*(xx+yy)
@@ -882,5 +812,50 @@ SphericalShell.prototype.solidMomentOfInertia = function() {
   return this;
 };
 </t>
+<t tx="fil.20180212213947.1">var elements=[];
+
+elements.push( new PointMass(1, 2,0,0));
+elements.push( new PointMass(1, 6,0,0));
+
+log("inertiaTensor: ",  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
+
+var body   = new Cuboid( 17500/9.81,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
+var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
+var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
+
+car = [ body, driver, fuel ];
+
+log("   totalemass car : ", totalMass(car), " kg"); // 1971.76 kg
+log("centerGravity car : ", centerGravity(car)); // x: 30.41, y: 30.52, z: 0
+log("inertiaTensor car : ", inertiaTensor(car)); // 752, 4238, 4508
+
+
+
+
+
+</t>
+<t tx="fil.20180212213953.1">// create dom
+var w_canvas = document.createElement("canvas" );
+// w_canvas.style.cssText = 'position:absolute;width:100%;height:100%;
+w_canvas.setAttribute("width","640");
+w_canvas.setAttribute("height","480");
+w_canvas.setAttribute("style", "border: 1px solid #888;");
+
+document.body.appendChild(w_canvas);
+
+// set context to draw text
+var  w_context;
+w_context = w_canvas.getContext('2d');
+
+
+//.fillStyle = 'cornflowerblue';
+//.strokeStyle = 'blue';
+//.strokeText
+
+w_context.font = "46px Arial";
+w_context.fillText("test text", 50, 50);
+
+</t>
+<t tx="fil.20180527202300.1"></t>
 </tnodes>
 </leo_file>

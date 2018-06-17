@@ -49,17 +49,20 @@ Vector.prototype.norm=function() {
 };
 Vector.prototype.normalize=function() {
   var w_length=this.norm();
-  this.x /= w_norm;
-  this.y /= w_norm;
-  this.z /= w_norm;
+  this.x /= w_length;
+  this.y /= w_length;
+  this.z /= w_length;
   return this;
 };
 Vector.prototype.tripleScalarProduct=function(p_b, p_c) {
 
   // a . (b x c) or (a x b) . c
 
-  // The scalar triple product can also be understood as the determinant of the 3×3 matrix (thus also its inverse) having the three vectors either as its rows or its columns (a matrix has the same determinant as its transpose)
-
+  // The scalar triple product can also be understood as the
+  // determinant of the 3×3 matrix (thus also its inverse)
+  // having the three vectors either as its rows or its columns
+  // (a matrix has the same determinant as its transpose)
+  
   return this.dot( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
 };
 Vector.prototype.tripleVectorProduct=function(p_b, p_c) {
@@ -356,7 +359,6 @@ function inertiaTensor(p_elements){
 
   var w_mn; // moment about own neutral axis
 
-  var d2;
   for (i = 0; i < p_elements.length; i++){ // Parallel Axis Theorem
                                            // MomentInertiaNeutral + Mass*distance^2
                                            // mn+ m*(yy+zz), mn+ m*(xx+zz), mn+ m*(xx+yy)

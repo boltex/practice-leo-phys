@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Created by Leo: http://leoeditor.com/leo_toc.html -->
 <leo_file xmlns:leo="http://leoeditor.com/namespaces/leo-python-editor/1.1" >
-<leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
-<globals body_outline_ratio="0.5" body_secondary_ratio="0.5">
-	<global_window_position top="50" left="50" height="500" width="700"/>
-	<global_log_window_position top="0" left="0" height="0" width="0"/>
-</globals>
+<leo_header file_format="2"/>
+<globals/>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
@@ -15,11 +12,11 @@
 <v t="fil.20180114220144.1"><vh>Structure Example 2</vh></v>
 <v t="fil.20180115231750.1"><vh>Structure Example 3</vh></v>
 </v>
-<v t="fil.20171126152802.1" a="E"><vh>app</vh>
+<v t="fil.20171126152802.1"><vh>app</vh>
 <v t="fil.20180212213947.1"><vh>tests maths and physics</vh></v>
 <v t="fil.20180212213953.1"><vh>tests canvas</vh></v>
 </v>
-<v t="fil.20171125220307.1" a="E"><vh>maths</vh>
+<v t="fil.20171125220307.1"><vh>maths</vh>
 <v t="fil.20180115213517.1"><vh>Vector</vh>
 <v t="fil.20180128231824.1"><vh>Constructor</vh></v>
 <v t="fil.20180128231835.1"><vh>Add</vh></v>
@@ -47,8 +44,8 @@
 <v t="fil.20180211123557.1"><vh>Vector Multiply</vh></v>
 </v>
 </v>
-<v t="fil.20171126222002.1" a="E"><vh>physics</vh>
-<v t="fil.20180206210238.1" a="E"><vh>Solids</vh>
+<v t="fil.20171126222002.1"><vh>physics</vh>
+<v t="fil.20180206210238.1"><vh>Solids</vh>
 <v t="fil.20171202212813.1"><vh>PointMass(mass, x, y, z)</vh></v>
 <v t="fil.20171202212845.1"><vh>Cuboid(mass, x, y, z, length, width, height)</vh></v>
 <v t="fil.20180206203816.1"><vh>Cylinder(mass, x, y, z, radius, length)</vh></v>
@@ -66,12 +63,12 @@
 <v t="fil.20171119191851.1"><vh>@clean src/index.html</vh>
 <v t="fil.20171119191851.2"><vh>doctype</vh></v>
 <v t="fil.20171119191851.3"><vh>html</vh>
-<v t="fil.20171119191851.4" a="E"><vh>head</vh>
+<v t="fil.20171119191851.4"><vh>head</vh>
 <v t="fil.20171119191851.5"><vh>Meta</vh></v>
 <v t="fil.20171119191851.6"><vh>Title</vh></v>
 <v t="fil.20171119191851.7"><vh>Styles</vh></v>
 </v>
-<v t="fil.20171119191851.8" a="E"><vh>body</vh>
+<v t="fil.20171119191851.8"><vh>body</vh>
 <v t="fil.20171119191851.12"><vh>Scripts</vh></v>
 </v>
 </v>
@@ -82,11 +79,11 @@
 </v>
 <v t="fil.20171119191824.1"><vh>Scripts</vh>
 <v t="fil.20171113233419.1"><vh>@clean src/scripts/app.js</vh>
-<v t="fil.20171126152802.1" a="E"></v>
+<v t="fil.20171126152802.1"></v>
 </v>
-<v t="fil.20171125220624.1" a="E"><vh>@clean src/scripts/libraries.js</vh>
-<v t="fil.20171125220307.1" a="E"></v>
-<v t="fil.20171126222002.1" a="E"></v>
+<v t="fil.20171125220624.1"><vh>@clean src/scripts/libraries.js</vh>
+<v t="fil.20171125220307.1"></v>
+<v t="fil.20171126222002.1"></v>
 </v>
 </v>
 </v>
@@ -100,7 +97,7 @@
 <t tx="fil.20171113165739.1">@lineending crlf
 </t>
 <t tx="fil.20171113172110.1">{
-  "name": "Physics",
+  "name": "physics",
   "description": "Physics tests",
   "version": "1.0.0",
   "dependencies": {},

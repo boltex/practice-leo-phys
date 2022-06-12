@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by Leo: http://leoeditor.com/leo_toc.html -->
 <leo_file xmlns:leo="http://leoeditor.com/namespaces/leo-python-editor/1.1" >
 <leo_header file_format="2"/>
@@ -6,7 +6,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="fil.20171118201906.1"><vh>Introduction</vh></v>
+<v t="fil.20171118201906.1"><vh>Introduction modified</vh></v>
 <v t="fil.20180527202300.1"><vh>JS encapsulation example.</vh>
 <v t="fil.20180114215850.1"><vh>Structure Example</vh></v>
 <v t="fil.20180114220144.1"><vh>Structure Example 2</vh></v>
@@ -97,132 +97,132 @@
 <t tx="fil.20171113165739.1">@lineending crlf
 </t>
 <t tx="fil.20171113172110.1">{
-  "name": "physics",
-  "description": "Physics tests",
-  "version": "1.0.0",
-  "dependencies": {},
-  "devDependencies": {
-    "browser-sync": "^2.18.13",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^2.4.0",
-    "gulp-concat": "^2.5.2",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^3.4.0",
-    "gulp-less": "^3.0.5",
-    "gulp-plumber": "^1.1.0",
-    "gulp-uglify": "^1.5.3",
-    "gulp-watch": "^4.1.1"
+  &quot;name&quot;: &quot;physics&quot;,
+  &quot;description&quot;: &quot;Physics tests&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;dependencies&quot;: {},
+  &quot;devDependencies&quot;: {
+    &quot;browser-sync&quot;: &quot;^2.18.13&quot;,
+    &quot;del&quot;: &quot;^3.0.0&quot;,
+    &quot;gulp&quot;: &quot;^3.9.1&quot;,
+    &quot;gulp-clean-css&quot;: &quot;^2.4.0&quot;,
+    &quot;gulp-concat&quot;: &quot;^2.5.2&quot;,
+    &quot;gulp-htmlmin&quot;: &quot;^3.0.0&quot;,
+    &quot;gulp-imagemin&quot;: &quot;^3.4.0&quot;,
+    &quot;gulp-less&quot;: &quot;^3.0.5&quot;,
+    &quot;gulp-plumber&quot;: &quot;^1.1.0&quot;,
+    &quot;gulp-uglify&quot;: &quot;^1.5.3&quot;,
+    &quot;gulp-watch&quot;: &quot;^4.1.1&quot;
   }
 }
 </t>
 <t tx="fil.20171113205902.1">@language javascript
 @tabwidth -2
 
-var gulp        = require('gulp'),
-    plumber     = require('gulp-plumber'),
-    concat      = require('gulp-concat'),
-    sourcemaps  = require('gulp-sourcemaps');
-    htmlMin     = require('gulp-htmlmin'),
-    less        = require('gulp-less'),
-    cleanCss    = require('gulp-clean-css'),
-    imageMin    = require('gulp-imagemin'),
-    uglify      = require('gulp-uglify'),
-    browserSync = require('browser-sync'),
-    del         = require('del'),
+var gulp        = require(&apos;gulp&apos;),
+    plumber     = require(&apos;gulp-plumber&apos;),
+    concat      = require(&apos;gulp-concat&apos;),
+    sourcemaps  = require(&apos;gulp-sourcemaps&apos;);
+    htmlMin     = require(&apos;gulp-htmlmin&apos;),
+    less        = require(&apos;gulp-less&apos;),
+    cleanCss    = require(&apos;gulp-clean-css&apos;),
+    imageMin    = require(&apos;gulp-imagemin&apos;),
+    uglify      = require(&apos;gulp-uglify&apos;),
+    browserSync = require(&apos;browser-sync&apos;),
+    del         = require(&apos;del&apos;),
     log         = console.log;
     
     // ****************************** Common unused
-    //autoprefixer    = require('gulp-autoprefixer');
-    //useref          = require('gulp-useref'),
-    //rev             = require('gulp-rev'),
-    //revReplace      = require('gulp-rev-replace'),
+    //autoprefixer    = require(&apos;gulp-autoprefixer&apos;);
+    //useref          = require(&apos;gulp-useref&apos;),
+    //rev             = require(&apos;gulp-rev&apos;),
+    //revReplace      = require(&apos;gulp-rev-replace&apos;),
 
-var pkg = require('./package.json'); // from our own product description
+var pkg = require(&apos;./package.json&apos;); // from our own product description
 
 var paths = {
   // sources
-  html    : "src/*.html",
-  ico     : "src/*.ico",
-  less    : "src/styles/*.less",
-  scripts : "src/scripts/*.js",
-  images  : "src/images/*",
+  html    : &quot;src/*.html&quot;,
+  ico     : &quot;src/*.ico&quot;,
+  less    : &quot;src/styles/*.less&quot;,
+  scripts : &quot;src/scripts/*.js&quot;,
+  images  : &quot;src/images/*&quot;,
   // output
-  build   : "dist"
+  build   : &quot;dist&quot;
 };
-gulp.task('default', function(){
-  log(""); 
-  log("   --------------------------------------");
-  log("                 gulp tasks              ");
-  log("   --------------------------------------");
-  log("    Build into dist/ folder from src/" );
-  log("    &gt; gulp build ");
-  log("  ");  
-  log("    Build and live reload in browser" );
-  log("    &gt; gulp browser ");
-  log("\n"); 
+gulp.task(&apos;default&apos;, function(){
+  log(&quot;&quot;); 
+  log(&quot;   --------------------------------------&quot;);
+  log(&quot;                 gulp tasks              &quot;);
+  log(&quot;   --------------------------------------&quot;);
+  log(&quot;    Build into dist/ folder from src/&quot; );
+  log(&quot;    &gt; gulp build &quot;);
+  log(&quot;  &quot;);  
+  log(&quot;    Build and live reload in browser&quot; );
+  log(&quot;    &gt; gulp browser &quot;);
+  log(&quot;\n&quot;); 
 });
 
-gulp.task('build', ['clean', 'html', 'ico', 'images', 'scripts', 'styles']);
+gulp.task(&apos;build&apos;, [&apos;clean&apos;, &apos;html&apos;, &apos;ico&apos;, &apos;images&apos;, &apos;scripts&apos;, &apos;styles&apos;]);
 
-gulp.task('clean', function() {
+gulp.task(&apos;clean&apos;, function() {
   return del.sync([paths.build]);
 });
 
-gulp.task('html', function(){
+gulp.task(&apos;html&apos;, function(){
   return gulp.src(paths.html)
     .pipe(plumber())
     .pipe(htmlMin( {collapseWhitespace: true} ))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest(&apos;dist&apos;))
 });
 
-gulp.task('ico', function(){
+gulp.task(&apos;ico&apos;, function(){
   return gulp.src(paths.ico)
     .pipe(plumber())
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest(&apos;dist&apos;))
 });
 
-gulp.task('images', function(){
+gulp.task(&apos;images&apos;, function(){
   return gulp.src(paths.images)
     .pipe(plumber())
     .pipe(imageMin())
-    .pipe(gulp.dest(paths.build+'/images'))
+    .pipe(gulp.dest(paths.build+&apos;/images&apos;))
 });
 
-gulp.task('scripts', function(){
+gulp.task(&apos;scripts&apos;, function(){
   return gulp.src(paths.scripts)
     .pipe(plumber())
     .pipe(sourcemaps.init())
       .pipe(uglify())
-      .pipe(concat('scripts.js'))
+      .pipe(concat(&apos;scripts.js&apos;))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.build+'/scripts'))
+    .pipe(gulp.dest(paths.build+&apos;/scripts&apos;))
 });
 
-gulp.task('styles', function(){
+gulp.task(&apos;styles&apos;, function(){
   return gulp.src(paths.less)
     .pipe(plumber())
     .pipe(less())
     .pipe(cleanCss())
-    .pipe(concat('styles.css'))
-    .pipe(gulp.dest(paths.build+'/styles'))
+    .pipe(concat(&apos;styles.css&apos;))
+    .pipe(gulp.dest(paths.build+&apos;/styles&apos;))
     .pipe(browserSync.stream());
 });
 
-gulp.task('browser', ['build'], function() {
+gulp.task(&apos;browser&apos;, [&apos;build&apos;], function() {
   browserSync({
     server: {
-      baseDir: './dist'
+      baseDir: &apos;./dist&apos;
     }
   });
-  gulp.watch('src/**/*.html', ['html']);
-  gulp.watch('src/scripts/**/*.js', ['scripts']);
-  gulp.watch('src/styles/**/*.less', ['styles']);  
-  gulp.watch('src/images/*', ['images']);
-  gulp.watch(["dist/scripts/*.js", "dist/images/*","dist/*.html" ]).on('change', browserSync.reload);
+  gulp.watch(&apos;src/**/*.html&apos;, [&apos;html&apos;]);
+  gulp.watch(&apos;src/scripts/**/*.js&apos;, [&apos;scripts&apos;]);
+  gulp.watch(&apos;src/styles/**/*.less&apos;, [&apos;styles&apos;]);  
+  gulp.watch(&apos;src/images/*&apos;, [&apos;images&apos;]);
+  gulp.watch([&quot;dist/scripts/*.js&quot;, &quot;dist/images/*&quot;,&quot;dist/*.html&quot; ]).on(&apos;change&apos;, browserSync.reload);
 });
 
-gulp.task('server', ['build'], function() {
+gulp.task(&apos;server&apos;, [&apos;build&apos;], function() {
  
 });
 </t>
@@ -239,10 +239,10 @@ import os
 import errno
 
 try:
-  os.mkdir("src")
-  os.mkdir("src/scripts")
-  os.mkdir("src/styles")
-  os.mkdir("src/images")
+  os.mkdir(&quot;src&quot;)
+  os.mkdir(&quot;src/scripts&quot;)
+  os.mkdir(&quot;src/styles&quot;)
+  os.mkdir(&quot;src/images&quot;)
 except OSError as e:
   pass
 
@@ -258,11 +258,11 @@ node_modules
 @tabwidth -4
 @others
 </t>
-<t tx="fil.20171119191851.12">&lt;script src="scripts/scripts.js"&gt;&lt;/script&gt;
+<t tx="fil.20171119191851.12">&lt;script src=&quot;scripts/scripts.js&quot;&gt;&lt;/script&gt;
 </t>
 <t tx="fil.20171119191851.2">&lt;!DOCTYPE html&gt;
 </t>
-<t tx="fil.20171119191851.3">&lt;html lang="en"&gt;
+<t tx="fil.20171119191851.3">&lt;html lang=&quot;en&quot;&gt;
 @others
 &lt;/html&gt;
 </t>
@@ -270,11 +270,11 @@ node_modules
   @others
 &lt;/head&gt;
 </t>
-<t tx="fil.20171119191851.5">&lt;meta charset="UTF-8"&gt;
+<t tx="fil.20171119191851.5">&lt;meta charset=&quot;UTF-8&quot;&gt;
 </t>
 <t tx="fil.20171119191851.6">&lt;title&gt;Physics test generated from Leo&lt;/title&gt;
 </t>
-<t tx="fil.20171119191851.7">&lt;link rel="stylesheet" href="styles/styles.css"&gt;
+<t tx="fil.20171119191851.7">&lt;link rel=&quot;stylesheet&quot; href=&quot;styles/styles.css&quot;&gt;
 </t>
 <t tx="fil.20171119191851.8">&lt;body&gt;
   @others
@@ -366,10 +366,10 @@ Cuboid.prototype.solidMomentOfInertia = function() {
 
 (function ($, MyObject, undefined) {
   MyObject.publicFunction = function() {
-      console.log("This is a public function!");
+      console.log(&quot;This is a public function!&quot;);
   };
   var privateFunction = function() {
-    console.log("This is a private function!");
+    console.log(&quot;This is a private function!&quot;);
   };
   
   MyObject.sayStuff = function() {
@@ -389,7 +389,7 @@ privateFunction(); // Returns error</t>
 <t tx="fil.20180114220144.1">@language javascript
 
 // namespace (our namespace name) and undefined are passed here
-// to ensure 1. namespace can be modified locally and isn't
+// to ensure 1. namespace can be modified locally and isn&apos;t
 // overwritten outside of our function context
 // 2. the value of undefined is guaranteed as being truly
 // undefined. This is to avoid issues with undefined being
@@ -397,21 +397,21 @@ privateFunction(); // Returns error</t>
 
 ;(function ( namespace, undefined ) {
     // private properties
-    var foo = "foo",
-        bar = "bar";
+    var foo = &quot;foo&quot;,
+        bar = &quot;bar&quot;;
 
     // public methods and properties
-    namespace.foobar = "foobar";
+    namespace.foobar = &quot;foobar&quot;;
     namespace.sayHello = function () {
-        speak("hello world");
+        speak(&quot;hello world&quot;);
     };
 
     // private method
     function speak(msg) {
-        console.log("You said: " + msg);
+        console.log(&quot;You said: &quot; + msg);
     };
 
-    // check to evaluate whether 'namespace' exists in the
+    // check to evaluate whether &apos;namespace&apos; exists in the
     // global namespace - if not, assign window.namespace an
     // object literal
 })(window.namespace = window.namespace || {});
@@ -424,13 +424,13 @@ console.log(namespace.foobar); // foobar
 namescpace.sayHello(); // hello world
 
 // assigning new properties
-namespace.foobar2 = "foobar";
+namespace.foobar2 = &quot;foobar&quot;;
 console.log(namespace.foobar2);
 
 </t>
 <t tx="fil.20180115213517.1">@others
 
-// Make all methods also available directly on 'Vector' with an additional first parameter.
+// Make all methods also available directly on &apos;Vector&apos; with an additional first parameter.
 // such as :
 // v3 = Vector.add(v1, v2) // will return a new sum vector v3. Neither v1 nor v2 will change.
 for (var w_key in Vector.prototype){
@@ -525,7 +525,7 @@ for (var w_key in Vector.prototype){
 </t>
 <t tx="fil.20180203235513.1">Vector.prototype.tripleVectorProduct=function(p_b, p_c) {
 
-  //              "BAC - CAB" mnemonic
+  //              &quot;BAC - CAB&quot; mnemonic
   // a x (b x c) = b(a.c) - c(a.b) 
   
   return this.cross( new Vector(p_b.x, p_b.y, p_b.z).cross(p_c) );
@@ -814,7 +814,7 @@ SphericalShell.prototype.solidMomentOfInertia = function() {
 elements.push( new PointMass(1, 2,0,0));
 elements.push( new PointMass(1, 6,0,0));
 
-log("inertiaTensor: ",  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
+log(&quot;inertiaTensor: &quot;,  inertiaTensor(elements));  // 0,0,0  0,8,0  0,0,8
 
 var body   = new Cuboid( 17500/9.81,  30.50, 30.50, 0,  4.70, 1.80, 1.25);
 var driver = new Cuboid(   850/9.81,  31.50, 31.00, 0,  0.90, 0.50, 1.10);
@@ -822,9 +822,9 @@ var fuel   = new Cuboid(   993/9.81,  28.00, 30.50, 0,  0.50, 0.90, 0.30);
 
 car = [ body, driver, fuel ];
 
-log("   totalemass car : ", totalMass(car), " kg"); // 1971.76 kg
-log("centerGravity car : ", centerGravity(car)); // x: 30.41, y: 30.52, z: 0
-log("inertiaTensor car : ", inertiaTensor(car)); // 752, 4238, 4508
+log(&quot;   totalemass car : &quot;, totalMass(car), &quot; kg&quot;); // 1971.76 kg
+log(&quot;centerGravity car : &quot;, centerGravity(car)); // x: 30.41, y: 30.52, z: 0
+log(&quot;inertiaTensor car : &quot;, inertiaTensor(car)); // 752, 4238, 4508
 
 
 
@@ -832,25 +832,25 @@ log("inertiaTensor car : ", inertiaTensor(car)); // 752, 4238, 4508
 
 </t>
 <t tx="fil.20180212213953.1">// create dom
-var w_canvas = document.createElement("canvas" );
-// w_canvas.style.cssText = 'position:absolute;width:100%;height:100%;
-w_canvas.setAttribute("width","640");
-w_canvas.setAttribute("height","480");
-w_canvas.setAttribute("style", "border: 1px solid #888;");
+var w_canvas = document.createElement(&quot;canvas&quot; );
+// w_canvas.style.cssText = &apos;position:absolute;width:100%;height:100%;
+w_canvas.setAttribute(&quot;width&quot;,&quot;640&quot;);
+w_canvas.setAttribute(&quot;height&quot;,&quot;480&quot;);
+w_canvas.setAttribute(&quot;style&quot;, &quot;border: 1px solid #888;&quot;);
 
 document.body.appendChild(w_canvas);
 
 // set context to draw text
 var  w_context;
-w_context = w_canvas.getContext('2d');
+w_context = w_canvas.getContext(&apos;2d&apos;);
 
 
-//.fillStyle = 'cornflowerblue';
-//.strokeStyle = 'blue';
+//.fillStyle = &apos;cornflowerblue&apos;;
+//.strokeStyle = &apos;blue&apos;;
 //.strokeText
 
-w_context.font = "46px Arial";
-w_context.fillText("test text", 50, 50);
+w_context.font = &quot;46px Arial&quot;;
+w_context.fillText(&quot;test text&quot;, 50, 50);
 
 </t>
 <t tx="fil.20180527202300.1"></t>
